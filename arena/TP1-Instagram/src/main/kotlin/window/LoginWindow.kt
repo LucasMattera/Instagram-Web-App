@@ -8,6 +8,7 @@ import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.commons.model.exceptions.UserException
 
 class LoginWindow : SimpleWindow<LoginModel> {
     constructor(owner: WindowOwner, model: LoginModel) : super(owner, model)
@@ -37,16 +38,20 @@ class LoginWindow : SimpleWindow<LoginModel> {
         Button(p0) with {
             caption = "Login"
             onClick {
-                var user = autenticar(modelObject.email,modelObject.password)
-                var system = getInstagramSystem()
-                var model = UserModel(user,system)
-                thisWindow.close() ; UserWindow(thisWindow,model).open()
+                try {
+                    var user = autenticar(modelObject.email, modelObject.password)
+                    var system = getInstagramSystem()
+                    var model = UserModel(user, system)
+                    thisWindow.close(); UserWindow(thisWindow, model).open()
+                } catch (e : Exception) {
+                    throw UserException("Email o password incorrectos !")
+                }
             }
         }
     }
 
-    private fun autenticar(email : String,password : String) : User {
-        return modelObject.system.login(email,password)
 
+    private fun autenticar(email: String, password: String): User {
+        return modelObject.system.login(email, password)
     }
 }
