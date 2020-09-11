@@ -39,7 +39,7 @@ class LoginWindow : SimpleWindow<LoginModel> {
             caption = "Login"
             onClick {
                 try {
-                    var user = autenticar(modelObject.email, modelObject.password)
+                    var user = autenticate(modelObject.email, modelObject.password)
                     var system = getInstagramSystem()
                     var model = UserModel(user, system)
                     thisWindow.close(); UserWindow(thisWindow, model).open()
@@ -51,7 +51,7 @@ class LoginWindow : SimpleWindow<LoginModel> {
     }
 
 
-    private fun autenticar(email: String, password: String): User {
+    private fun autenticate(email: String, password: String): User {
         return modelObject.system.login(email, password)
     }
 }
