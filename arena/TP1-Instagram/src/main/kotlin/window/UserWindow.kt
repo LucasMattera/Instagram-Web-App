@@ -53,11 +53,5 @@ class UserWindow : SimpleWindow<UserModel> {
                 bindContentsTo("description")
             }
         }
-/*
-    private fun filterById(id: String): Post {
-        return modelObject.system.getPost(id)
-    }
-
- */
     }
 }

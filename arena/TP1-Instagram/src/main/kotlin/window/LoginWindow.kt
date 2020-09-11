@@ -40,10 +40,10 @@ class LoginWindow : SimpleWindow<LoginModel> {
             onClick {
                 try {
                     var user = autenticate(modelObject.email, modelObject.password)
-                    var system = getInstagramSystem()
+                    var system = getInstagramSystem() //creo que aca es donde jota dijo que estamos instanciando un nuevo ig system
                     var model = UserModel(user, system)
                     thisWindow.close(); UserWindow(thisWindow, model).open()
-                } catch (e : Exception) {
+                } catch (e : Exception) { // aca mepa que hay que cambiarlo por UserException
                     throw UserException("Email o password incorrectos !")
                 }
             }
