@@ -40,15 +40,6 @@ class UserWindow : SimpleWindow<UserModel> {
             text = "Edit profile"
             width = 300
         }
-        TextBox(p0) with {
-            bindTo(propertyName = "idPost")
-            width = 300
-        }
-        Button(p0) with {
-            caption = "Search"
-            onClick {
-            }
-        }
         table<PostModel>(p0) {
             bindItemsTo("posts")
             bindSelectionTo("selected")
