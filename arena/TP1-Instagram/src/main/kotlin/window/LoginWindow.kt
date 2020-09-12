@@ -2,13 +2,12 @@ package window
 
 import LoginModel
 import model.UserModel
-import org.unq.ui.bootstrap.getInstagramSystem
-import org.unq.ui.model.User
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
+import org.unq.ui.model.NotFound
 
 class LoginWindow : SimpleWindow<LoginModel> {
     constructor(owner: WindowOwner, model: LoginModel) : super(owner, model)
@@ -39,19 +38,14 @@ class LoginWindow : SimpleWindow<LoginModel> {
             caption = "Login"
             onClick {
                 try {
-                    var user = autenticate(modelObject.email, modelObject.password)
-                    var system = getInstagramSystem() //creo que aca es donde jota dijo que estamos instanciando un nuevo ig system
-                    var model = UserModel(user, system)
-                    thisWindow.close(); UserWindow(thisWindow, model).open()
-                } catch (e : Exception) { // aca mepa que hay que cambiarlo por UserException
-                    throw UserException("Email o password incorrectos !")
+                    var user = modelObject.login(modelObject.email,modelObject.password)
+                    var model = UserModel(user, modelObject.system)
+                    thisWindow.close() ; UserWindow(thisWindow, model).open()
+                } catch (e : NotFound ) {
+                    throw UserException(e.message)
                 }
             }
         }
     }
 
-
-    private fun autenticate(email: String, password: String): User {
-        return modelObject.system.login(email, password)
-    }
 }

@@ -32,6 +32,7 @@ class UserWindow : SimpleWindow<UserModel> {
             caption = "Remove Post"
         }
 
+
     }
 
     override fun createFormPanel(mainPanel: Panel) {
@@ -59,9 +60,13 @@ class UserWindow : SimpleWindow<UserModel> {
         }
         Button(mainPanel) with {
             caption = "Search"
-            onClick {
-                modelObject.filterByTag(modelObject.description)
-            }
+            onClick( Action { modelObject.filterByDescription(modelObject.description) } )
+        }
+        Button(mainPanel) with {
+            caption = "Back"
+            onClick ( Action {
+                modelObject.resetPost()
+            })
         }
 
         table<PostModel>(mainPanel) {
