@@ -13,29 +13,29 @@ import org.uqbar.commons.model.exceptions.UserException
 class LoginWindow : SimpleWindow<LoginModel> {
     constructor(owner: WindowOwner, model: LoginModel) : super(owner, model)
 
-    override fun addActions(p0: Panel) {
+    override fun addActions(actionPanel: Panel) {
     }
 
-    override fun createFormPanel(p0: Panel) {
+    override fun createFormPanel(mainPanel: Panel) {
         title = "Instagram"
 
-        Label(p0) with {
+        Label(mainPanel) with {
             text = "Email"
             alignLeft()
         }
-        TextBox(p0) with {
+        TextBox(mainPanel) with {
             bindTo(propertyName = "email")
             width = 150
         }
-        Label(p0) with {
+        Label(mainPanel) with {
             alignLeft()
             text = "Password"
         }
-        PasswordField(p0) with {
+        PasswordField(mainPanel) with {
             bindTo(propertyName = "password")
         }
 
-        Button(p0) with {
+        Button(mainPanel) with {
             caption = "Login"
             onClick {
                 try {
