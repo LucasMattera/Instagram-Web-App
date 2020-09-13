@@ -1,4 +1,3 @@
-import exception.LoginException
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.User
 import org.uqbar.commons.model.annotations.Observable
@@ -12,10 +11,4 @@ class LoginModel (val system: InstagramSystem) {
         return system.login(email,password)
     }
 
-
-    fun comprobarDatos(email : String, password : String) {
-        if ( this.email != email && this.password != password) {
-            throw LoginException("Email o password incorrecto")
-        }
-    }
 }

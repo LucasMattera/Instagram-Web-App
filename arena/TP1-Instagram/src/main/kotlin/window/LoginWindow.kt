@@ -23,8 +23,9 @@ class LoginWindow : SimpleWindow<LoginModel> {
             alignLeft()
         }
         TextBox(mainPanel) with {
+            width = 250
             bindTo(propertyName = "email")
-            width = 150
+
         }
         Label(mainPanel) with {
             alignLeft()
