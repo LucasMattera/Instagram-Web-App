@@ -43,7 +43,7 @@ class LoginWindow : SimpleWindow<LoginModel> {
                     var model = UserModel(user, modelObject.system)
                     thisWindow.close() ; UserWindow(thisWindow, model).open()
                 } catch (e : NotFound ) {
-                    throw UserException(e.message)
+                    throw UserException("Email or password incorrect")
                 }
             }
         }

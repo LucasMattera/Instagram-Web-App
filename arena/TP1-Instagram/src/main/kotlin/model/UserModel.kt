@@ -1,5 +1,6 @@
 package model
 
+import org.unq.ui.model.DraftPost
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.User
 import org.uqbar.commons.model.annotations.Observable
@@ -13,6 +14,8 @@ class UserModel(user : User,val system : InstagramSystem) {
     var postDuplicate = allPost()
     var selected : PostModel? = null
     var description : String = ""
+    var image : String = user.image
+    var password : String = user.password
 
     fun filterByDescription(description : String) {
         this.posts = posts.filter { it.description.contains(description) }
@@ -25,6 +28,11 @@ class UserModel(user : User,val system : InstagramSystem) {
     fun allPost() : List<PostModel> {
         var posts = system.searchByUserId(id).map { PostModel(it.id, it.description, it.landscape, it.portrait) }
         return posts
+    }
+
+    fun editPost(postId : String, post : DraftPostModel) {
+        system.editPost(postId, DraftPost(post.portrait, post.landscape, post.description))
+        posts = allPost()
     }
 
 }

@@ -1,5 +1,6 @@
 package window
 
+import model.DraftPostModel
 import model.PostModel
 import model.UserModel
 import org.uqbar.arena.kotlin.extensions.*
@@ -9,6 +10,7 @@ import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.commons.model.exceptions.UserException
 import org.uqbar.lacar.ui.model.Action
 
 
@@ -23,7 +25,20 @@ class UserWindow : SimpleWindow<UserModel> {
         }
         Button(actionPanel) with {
             caption = "Edit Post"
+                onClick {
+                    if ( modelObject.selected == null ) {
+                        throw UserException("Please, select a post")
+                    }
+                    val post = DraftPostModel(modelObject.selected!!)
+                    val view = EditPostWindow(thisWindow,post)
+                    view.onAccept {
+                        modelObject.editPost(modelObject.selected!!.id,post)
+                    }
+                    view.open()
+
+                }
         }
+
         Button(actionPanel) with {
             caption = "Remove Post"
         }
@@ -48,6 +63,9 @@ class UserWindow : SimpleWindow<UserModel> {
         }
         Button(mainPanel) with {
             text = "Edit Profile"
+            onClick {
+                EditUserWindow(thisWindow,modelObject).open()
+            }
         }
         Label(mainPanel) with {
             text = "-----------------------------------------------------------------------------------------------------------------------------------------------------------"
