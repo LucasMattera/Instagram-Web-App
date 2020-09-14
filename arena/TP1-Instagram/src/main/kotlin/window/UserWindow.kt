@@ -50,6 +50,9 @@ class UserWindow : SimpleWindow<UserModel> {
                 val post = DraftPostModel()
                 val view = EditPostWindow(thisWindow, post)
                 view.onAccept {
+                    if ( post.description == "" || post.landscape == "" || post.portrait == "") {
+                        throw UserException(" The field cannot be empty ")
+                    }
                     modelObject.addPost(post)
                 }
                 view.open()
@@ -63,8 +66,8 @@ class UserWindow : SimpleWindow<UserModel> {
                     if ( modelObject.selected == null ) {
                         throw UserException("Please, select a post")
                     }
-                    var post = DraftPostModel(modelObject.selected!!)
-                    var view = EditPostWindow(thisWindow,post)
+                    val post = DraftPostModel(modelObject.selected!!)
+                    val view = EditPostWindow(thisWindow,post)
                     view.onAccept {
                         modelObject.editPost(modelObject.selected!!.id,post)
                     }
@@ -107,8 +110,8 @@ class UserWindow : SimpleWindow<UserModel> {
         Button(mainPanel) with {
             text = "Edit Profile"
             onClick {
-                var user = EditUserModel(modelObject.name,modelObject.password,modelObject.image)
-                var view = EditUserWindow(thisWindow,user)
+                val user = EditUserModel(modelObject.name,modelObject.password,modelObject.image)
+                val view = EditUserWindow(thisWindow,user)
                 view.onAccept {
                     if ( user.name == "" ||user.password == "" || user.image == "") {
                         throw UserException(" The field cannot be empty ")
