@@ -44,6 +44,7 @@ class UserWindow : SimpleWindow<UserModel> {
         Button(actionPanel) with {
             caption = "Add Post"
         }
+
         Button(actionPanel) with {
             caption = "Edit Post"
             onClick {
@@ -59,6 +60,7 @@ class UserWindow : SimpleWindow<UserModel> {
 
             }
         }
+
         Button(actionPanel) with {
             caption = "Remove Post"
             onClick {
