@@ -1,7 +1,6 @@
 package window
 
 import model.EditUserModel
-import model.UserModel
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label

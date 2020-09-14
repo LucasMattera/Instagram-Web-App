@@ -42,9 +42,17 @@ class UserModel(user : User,val system : InstagramSystem) {
         this.image = user.image
     }
 
+
     fun removePost(postId: String){
         system.deletePost(postId)
         posts = allPost()
     }
+
+    fun addPost(post: DraftPostModel) {
+        system.addPost (id, DraftPost(post.portrait, post.landscape, post.description))
+        posts= allPost()
+
+    }
+    
 
 }
