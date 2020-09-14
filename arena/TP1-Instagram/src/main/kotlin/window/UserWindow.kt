@@ -46,7 +46,17 @@ class UserWindow : SimpleWindow<UserModel> {
     override fun addActions(actionPanel: Panel) {
         Button(actionPanel) with {
             caption = "Add Post"
+            onClick {
+                val post = DraftPostModel()
+                val view = EditPostWindow(thisWindow, post)
+                view.onAccept {
+                    modelObject.addPost(post)
+                }
+                view.open()
+
+            }
         }
+
         Button(actionPanel) with {
             caption = "Edit Post"
                 onClick {

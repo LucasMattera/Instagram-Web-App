@@ -44,6 +44,7 @@ class UserModel(user : User,val system : InstagramSystem) {
 
     fun addPost(post: DraftPostModel) {
         system.addPost (id, DraftPost(post.portrait, post.landscape, post.description))
+        posts= allPost()
 
     }
 
