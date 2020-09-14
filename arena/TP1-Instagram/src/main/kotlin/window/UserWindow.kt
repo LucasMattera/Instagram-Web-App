@@ -62,13 +62,13 @@ class UserWindow : SimpleWindow<UserModel> {
 
             }
         }
-
         Button(actionPanel) with {
             caption = "Remove Post"
             onClick {
                 if (modelObject.selected == null) {
                     throw UserException("Please, select a post")
                 }
+                modelObject.removeNote(modelObject.selected!!.id)
             }
         }
     }
