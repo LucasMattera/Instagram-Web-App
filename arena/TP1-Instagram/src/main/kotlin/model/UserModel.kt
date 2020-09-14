@@ -35,4 +35,12 @@ class UserModel(user : User,val system : InstagramSystem) {
         posts = allPost()
     }
 
+    fun editUser(user : EditUserModel) {
+        system.editProfile(id,user.name,user.password,user.image)
+        this.name = user.name
+        this.password = user.password
+        this.image = user.image
+    }
+
+
 }

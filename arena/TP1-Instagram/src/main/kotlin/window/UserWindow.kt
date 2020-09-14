@@ -1,9 +1,11 @@
 package window
 
 import model.DraftPostModel
+import model.EditUserModel
 import model.PostModel
 import model.UserModel
 import org.uqbar.arena.kotlin.extensions.*
+import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.Panel
@@ -19,6 +21,28 @@ class UserWindow : SimpleWindow<UserModel> {
 
     constructor(owner: WindowOwner, model: UserModel) : super(owner, model)
 
+    fun textBox(panel: Panel,ancho: Int, propiedad: String){
+        TextBox(panel) with {
+            width = ancho
+            bindTo(propiedad)
+        }
+    }
+
+    fun labelText(panel:Panel ,texto: String ){
+        Label(panel) with {
+            text = texto
+            alignLeft()
+        }
+    }
+
+    fun labelBind(panel:Panel,texto: String) {
+        Label(panel) with {
+            bindTo(texto)
+            alignLeft()
+        }
+    }
+
+
     override fun addActions(actionPanel: Panel) {
         Button(actionPanel) with {
             caption = "Add Post"
@@ -29,8 +53,8 @@ class UserWindow : SimpleWindow<UserModel> {
                     if ( modelObject.selected == null ) {
                         throw UserException("Please, select a post")
                     }
-                    val post = DraftPostModel(modelObject.selected!!)
-                    val view = EditPostWindow(thisWindow,post)
+                    var post = DraftPostModel(modelObject.selected!!)
+                    var view = EditPostWindow(thisWindow,post)
                     view.onAccept {
                         modelObject.editPost(modelObject.selected!!.id,post)
                     }
@@ -49,36 +73,57 @@ class UserWindow : SimpleWindow<UserModel> {
     override fun createFormPanel(mainPanel: Panel) {
         title = "User View"
 
-        Label(mainPanel) with {
-            text = "id : ${modelObject.id}"
-            alignLeft()
-        }
-        Label(mainPanel) with {
-            text = "name : ${modelObject.name}"
-            alignLeft()
-        }
-        Label(mainPanel) with {
-            text = "email : ${modelObject.email}"
-            alignLeft()
-        }
+        val idPanel = Panel(mainPanel)
+        idPanel.layout = HorizontalLayout()
+
+        val namePanel = Panel(mainPanel)
+        namePanel.layout = HorizontalLayout()
+
+        val emailPanel = Panel(mainPanel)
+        emailPanel.layout = HorizontalLayout()
+
+
+        labelText(idPanel," id : ")
+        labelBind(idPanel,"id")
+
+
+        labelText(namePanel,"name : ")
+        labelBind(namePanel,"name")
+
+        labelText(emailPanel,"email : ")
+        labelBind(emailPanel,"email")
+
+
         Button(mainPanel) with {
             text = "Edit Profile"
             onClick {
-                EditUserWindow(thisWindow,modelObject).open()
+                var user = EditUserModel(modelObject.name,modelObject.password,modelObject.image)
+                var view = EditUserWindow(thisWindow,user)
+                view.onAccept {
+                    if ( user.name == "" ||user.password == "" || user.image == "") {
+                        throw UserException(" The field cannot be empty ")
+                    }
+                    else {
+                        modelObject.editUser(user)
+                    }
+                }
+                view.open()
             }
         }
-        Label(mainPanel) with {
-            text = "-----------------------------------------------------------------------------------------------------------------------------------------------------------"
-        }
-        TextBox(mainPanel) with {
-            bindTo(propertyName = "description")
-            width=300
-        }
-        Button(mainPanel) with {
+
+        labelText(mainPanel,"--------------------------------------------------------------------------------------------------------------------")
+
+        val botonPanel = Panel(mainPanel)
+        botonPanel.layout = HorizontalLayout()
+
+        textBox(botonPanel,250,"description")
+
+        Button(botonPanel) with {
             caption = "Search"
             onClick( Action { modelObject.filterByDescription(modelObject.description) } )
         }
-        Button(mainPanel) with {
+
+        Button(botonPanel) with {
             caption = "Back"
             onClick ( Action {
                 modelObject.resetPost()
@@ -103,12 +148,12 @@ class UserWindow : SimpleWindow<UserModel> {
             column {
                 title = "Landscape"
                 bindContentsTo("landscape")
-                fixedSize = 200
+                fixedSize = 100
             }
             column {
                 title = "Portrait"
                 bindContentsTo("portrait")
-                fixedSize = 200
+                fixedSize = 100
             }
         }
     }
