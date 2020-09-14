@@ -3,6 +3,7 @@ package window
 import model.RegisterModel
 import org.uqbar.arena.kotlin.extensions.bindTo
 import org.uqbar.arena.kotlin.extensions.text
+import org.uqbar.arena.kotlin.extensions.thisWindow
 import org.uqbar.arena.kotlin.extensions.with
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Label
@@ -24,8 +25,20 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
         }
     }
 
-    override fun addActions(p0: Panel?) {
-        TODO("Not yet implemented")
+    override fun addActions(actionPanel: Panel) {
+        Button(actionPanel) with {
+            text = "Register"
+            onClick {
+                accept()
+            }
+        }
+        Button(actionPanel) with {
+            text = "Cancel"
+            onClick {
+                cancel()
+            }
+        }
+
     }
 
     override fun createFormPanel(mainPanel: Panel) {
@@ -43,14 +56,7 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
         labelText(mainPanel,"Repeat Password: ")
         textBox(mainPanel,"passwordCheck")
 
-        /*Button(mainPanel) with {
-            text = "Register"
-            onClick {
-                var newUser = RegisterModel()
-                modelObject.register()
-            }
-        }
-      */
+
     }
 
 }

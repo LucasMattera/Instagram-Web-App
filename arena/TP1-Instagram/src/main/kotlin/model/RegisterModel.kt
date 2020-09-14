@@ -1,6 +1,7 @@
 package model
 
 import org.unq.ui.model.InstagramSystem
+import org.unq.ui.model.User
 import org.uqbar.commons.model.annotations.Observable
 
 @Observable
@@ -11,8 +12,8 @@ class RegisterModel(val system: InstagramSystem) {
     var passwordCheck : String = ""
     var image : String = ""
 
-    fun register(name : String, email : String, pass : String, image : String){
-        system.register(name, email, pass, image)
+    fun register(name : String, email : String, pass : String,passCheck : String, image : String) : User {
+        return system.register(name, email, pass, image)
     }
 
 }

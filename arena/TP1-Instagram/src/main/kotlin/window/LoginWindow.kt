@@ -1,6 +1,7 @@
 package window
 
 import LoginModel
+import model.RegisterModel
 import model.UserModel
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
@@ -8,6 +9,7 @@ import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 import org.unq.ui.model.NotFound
+import org.unq.ui.model.User
 
 class LoginWindow : SimpleWindow<LoginModel> {
     constructor(owner: WindowOwner, model: LoginModel) : super(owner, model)
@@ -68,8 +70,25 @@ class LoginWindow : SimpleWindow<LoginModel> {
         Button(mainPanel) with {
             caption = "Sign In"
             onClick {
+                val model = RegisterModel(modelObject.system)
+                val view = RegisterWindow(thisWindow,model)
+                val user = model.register(model.name,model.email,model.password,model.passwordCheck,model.image)
+                view.onAccept {
+                    thisWindow.close()
+                    view.close()
+                    UserWindow(thisWindow, userToUserModel(user))
 
+                }
+                view.onCancel {
+                    view.close() ;
+                }
+                view.open()
             }
         }
+    }
+
+    fun userToUserModel(user : User) : UserModel {
+        val user = User(user.id,user.name,user.email,user.image,user.password,user.followers)
+        return UserModel(user,modelObject.system)
     }
 }
