@@ -55,11 +55,5 @@ class LoginWindow : SimpleWindow<LoginModel> {
                 }
             }
         }
-        Button(mainPanel) with {
-            caption = "Sign In"
-            onClick {
-                var view = RegisterWindow()
-            }
-        }
     }
 }
