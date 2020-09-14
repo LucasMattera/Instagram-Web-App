@@ -42,7 +42,7 @@ class UserModel(user : User,val system : InstagramSystem) {
         this.image = user.image
     }
 
-    fun removeNote(postId: String){
+    fun removePost(postId: String){
         system.deletePost(postId)
         posts = allPost()
     }

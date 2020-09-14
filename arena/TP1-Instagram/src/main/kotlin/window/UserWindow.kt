@@ -1,9 +1,6 @@
 package window
 
-import model.DraftPostModel
-import model.EditUserModel
-import model.PostModel
-import model.UserModel
+import model.*
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
@@ -68,7 +65,11 @@ class UserWindow : SimpleWindow<UserModel> {
                 if (modelObject.selected == null) {
                     throw UserException("Please, select a post")
                 }
-                modelObject.removeNote(modelObject.selected!!.id)
+                val deleteWindow = DeleteWindowModel(this@UserWindow, modelObject.selected!!)
+                deleteWindow.onAccept{
+                    modelObject.removePost(modelObject.selected!!.id)
+                }
+                deleteWindow.open()
             }
         }
     }
