@@ -13,28 +13,36 @@ class LoginWindow : SimpleWindow<LoginModel> {
     constructor(owner: WindowOwner, model: LoginModel) : super(owner, model)
 
 
-    override fun addActions(actionPanel: Panel) {
+    fun textBox(panel: Panel, propiedad: String, widthP : Int){
+        TextBox(panel) with {
+            width = widthP
+            bindTo(propiedad)
+        }
     }
+
+    fun labelText(panel:Panel ,texto: String ){
+        Label(panel) with {
+            text = texto
+            alignLeft()
+        }
+    }
+
+    fun passwordField(panel: Panel, pass : String){
+        PasswordField(panel) with {
+            bindTo(propertyName = pass)
+        }
+    }
+
+    override fun addActions(mainPanel: Panel) {}
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Instagram"
 
-        Label(mainPanel) with {
-            text = "Email"
-            alignLeft()
-        }
-        TextBox(mainPanel) with {
-            width = 250
-            bindTo(propertyName = "email")
+        labelText(mainPanel,"Email")
+        textBox(mainPanel,"email", 250)
 
-        }
-        Label(mainPanel) with {
-            alignLeft()
-            text = "Password"
-        }
-        PasswordField(mainPanel) with {
-            bindTo(propertyName = "password")
-        }
+        labelText(mainPanel,"Password")
+        passwordField(mainPanel, "password")
 
         fun algunosDeLosCamposEstanVacios(modelObject: LoginModel): Boolean {
             return ( modelObject.email == "" || modelObject.password == "")
@@ -56,6 +64,12 @@ class LoginWindow : SimpleWindow<LoginModel> {
                 }
             }
         }
-    }
 
+        Button(mainPanel) with {
+            caption = "Sign In"
+            onClick {
+
+            }
+        }
+    }
 }

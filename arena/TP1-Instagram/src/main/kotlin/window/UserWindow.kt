@@ -1,9 +1,6 @@
 package window
 
-import model.DraftPostModel
-import model.EditUserModel
-import model.PostModel
-import model.UserModel
+import model.*
 import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
@@ -21,29 +18,33 @@ class UserWindow : SimpleWindow<UserModel> {
 
     constructor(owner: WindowOwner, model: UserModel) : super(owner, model)
 
-    fun textBox(panel: Panel,ancho: Int, propiedad: String){
+    fun textBox(panel: Panel, ancho: Int, propiedad: String) {
         TextBox(panel) with {
             width = ancho
             bindTo(propiedad)
         }
     }
 
-    fun labelText(panel:Panel ,texto: String ){
+    fun labelText(panel: Panel, texto: String) {
         Label(panel) with {
             text = texto
             alignLeft()
         }
     }
 
-    fun labelBind(panel:Panel,texto: String) {
+    fun labelBind(panel: Panel, texto: String) {
         Label(panel) with {
             bindTo(texto)
             alignLeft()
         }
     }
 
-    fun algunosDeLosCamposEstanVacios(user: EditUserModel): Boolean {
+    fun algunosDeLosCamposDelUsuarioEstanVacios(user: EditUserModel): Boolean {
        return  (user.name == "" ||user.password == "" || user.image == "")
+    }
+
+    fun algunosDeLosCamposDelPostEstanVacios(post : DraftPostModel) : Boolean {
+        return (post.portrait == "" || post.landscape == "" || post.description == "")
     }
 
 
@@ -55,7 +56,7 @@ class UserWindow : SimpleWindow<UserModel> {
                 val post = DraftPostModel()
                 val view = EditPostWindow(thisWindow, post)
                 view.onAccept {
-                    if ( post.description == "" || post.landscape == "" || post.portrait == "") {
+                    if ( algunosDeLosCamposDelPostEstanVacios(post)) {
                         throw UserException(" The field cannot be empty ")
                     }
                     modelObject.addPost(post)
@@ -67,25 +68,35 @@ class UserWindow : SimpleWindow<UserModel> {
 
         Button(actionPanel) with {
             caption = "Edit Post"
-                onClick {
-                    if ( modelObject.selected == null ) {
-                        throw UserException("Please, select a post")
-                    }
-                    val post = DraftPostModel(modelObject.selected!!)
-                    val view = EditPostWindow(thisWindow,post)
-                    view.onAccept {
-                        modelObject.editPost(modelObject.selected!!.id,post)
-                    }
-                    view.open()
-
+            onClick {
+                if (modelObject.selected == null) {
+                    throw UserException("Please, select a post")
                 }
+                val post = DraftPostModel(modelObject.selected!!)
+                val view = EditPostWindow(thisWindow, post)
+                view.onAccept {
+                    if (algunosDeLosCamposDelPostEstanVacios(post)) {
+                        throw UserException("The field cannot be empty")
+                    }
+                    modelObject.editPost(modelObject.selected!!.id, post)
+                }
+                view.open()
+            }
         }
 
         Button(actionPanel) with {
             caption = "Remove Post"
+            onClick {
+                if (modelObject.selected == null) {
+                    throw UserException("Please, select a post")
+                }
+                val deleteWindow = DeletePostWindow(this@UserWindow, modelObject.selected!!)
+                deleteWindow.onAccept{
+                    modelObject.removePost(modelObject.selected!!.id)
+                }
+                deleteWindow.open()
+            }
         }
-
-
     }
 
     override fun createFormPanel(mainPanel: Panel) {
@@ -101,27 +112,27 @@ class UserWindow : SimpleWindow<UserModel> {
         emailPanel.layout = HorizontalLayout()
 
 
-        labelText(idPanel," id : ")
-        labelBind(idPanel,"id")
+        labelText(idPanel, " id : ")
+        labelBind(idPanel, "id")
 
 
-        labelText(namePanel,"name : ")
-        labelBind(namePanel,"name")
+        labelText(namePanel, "name : ")
+        labelBind(namePanel, "name")
 
-        labelText(emailPanel,"email : ")
-        labelBind(emailPanel,"email")
+        labelText(emailPanel, "email : ")
+        labelBind(emailPanel, "email")
 
 
         Button(mainPanel) with {
             text = "Edit Profile"
             onClick {
+
                 val user = EditUserModel(modelObject.name,modelObject.password,modelObject.image)
                 val view = EditUserWindow(thisWindow,user)
                 view.onAccept {
-                    if ( algunosDeLosCamposEstanVacios (user)) {
+                    if ( algunosDeLosCamposDelUsuarioEstanVacios (user)) {
                         throw UserException(" The field cannot be empty ")
-                    }
-                    else {
+                    } else {
                         modelObject.editUser(user)
                     }
                 }
@@ -129,21 +140,21 @@ class UserWindow : SimpleWindow<UserModel> {
             }
         }
 
-        labelText(mainPanel,"--------------------------------------------------------------------------------------------------------------------")
+        labelText(mainPanel, "--------------------------------------------------------------------------------------------------------------------")
 
         val botonPanel = Panel(mainPanel)
         botonPanel.layout = HorizontalLayout()
 
-        textBox(botonPanel,250,"description")
+        textBox(botonPanel, 250, "description")
 
         Button(botonPanel) with {
             caption = "Search"
-            onClick( Action { modelObject.filterByDescription(modelObject.description) } )
+            onClick(Action { modelObject.filterByDescription(modelObject.description) })
         }
 
         Button(botonPanel) with {
             caption = "Back"
-            onClick ( Action {
+            onClick(Action {
                 modelObject.resetPost()
             })
         }

@@ -11,27 +11,30 @@ import org.uqbar.arena.windows.WindowOwner
 
 class EditUserWindow(owner: WindowOwner, model: EditUserModel) : Dialog<EditUserModel>(owner,model) {
 
-    override fun createFormPanel(mainPanel: Panel) {
-        title = "Edit User"
+    fun textBox(panel: Panel, propiedad: String){
+        TextBox(panel) with {
+            bindTo(propiedad)
+        }
+    }
 
-        Label(mainPanel) with {
-            text = "Name"
+    fun labelText(panel:Panel ,texto: String ){
+        Label(panel) with {
+            text = texto
         }
-        TextBox(mainPanel) with {
-            bindTo(propertyName = "name")
-        }
-        Label(mainPanel) with {
-            text = "Password"
-        }
-        TextBox(mainPanel) with {
-            bindTo(propertyName = "password")
-        }
-        Label(mainPanel) with {
-            text = "Image"
-        }
-        TextBox(mainPanel) with {
-            bindTo(propertyName = "image")
-        }
+    }
+
+    override fun createFormPanel(mainPanel: Panel) {
+        title = "Edit Profile"
+
+        labelText(mainPanel,"Name")
+        textBox(mainPanel,"name")
+
+        labelText(mainPanel,"Password")
+        textBox(mainPanel,"password")
+
+        labelText(mainPanel,"Image")
+        textBox(mainPanel,"image")
+
         Button(mainPanel) with {
             text = "Accept"
             onClick {
@@ -46,5 +49,4 @@ class EditUserWindow(owner: WindowOwner, model: EditUserModel) : Dialog<EditUser
             }
         }
     }
-
 }
