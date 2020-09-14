@@ -11,7 +11,8 @@ class RegisterModel(val system: InstagramSystem) {
     var passwordCheck : String = ""
     var image : String = ""
 
-    fun signIn(name : String, email : String, pass : String, image : String){
+    fun register(name : String, email : String, pass : String, image : String){
         system.register(name, email, pass, image)
     }
+
 }
