@@ -42,10 +42,15 @@ class UserWindow : SimpleWindow<UserModel> {
         }
     }
 
+    fun algunosDeLosCamposEstanVacios(user: EditUserModel): Boolean {
+       return  (user.name == "" ||user.password == "" || user.image == "")
+    }
+
 
     override fun addActions(actionPanel: Panel) {
         Button(actionPanel) with {
             caption = "Add Post"
+
             onClick {
                 val post = DraftPostModel()
                 val view = EditPostWindow(thisWindow, post)
@@ -110,7 +115,7 @@ class UserWindow : SimpleWindow<UserModel> {
                 var user = EditUserModel(modelObject.name,modelObject.password,modelObject.image)
                 var view = EditUserWindow(thisWindow,user)
                 view.onAccept {
-                    if ( user.name == "" ||user.password == "" || user.image == "") {
+                    if ( algunosDeLosCamposEstanVacios (user)) {
                         throw UserException(" The field cannot be empty ")
                     }
                     else {

@@ -12,6 +12,7 @@ import org.unq.ui.model.NotFound
 class LoginWindow : SimpleWindow<LoginModel> {
     constructor(owner: WindowOwner, model: LoginModel) : super(owner, model)
 
+
     override fun addActions(actionPanel: Panel) {
     }
 
@@ -35,9 +36,17 @@ class LoginWindow : SimpleWindow<LoginModel> {
             bindTo(propertyName = "password")
         }
 
+        fun algunosDeLosCamposEstanVacios(modelObject: LoginModel): Boolean {
+            return ( modelObject.email == "" || modelObject.password == "")
+        }
+
         Button(mainPanel) with {
             caption = "Login"
             onClick {
+
+                if ( algunosDeLosCamposEstanVacios (modelObject)) {
+                    throw UserException(" The field cannot be empty ")
+                }
                 try {
                     var user = modelObject.login(modelObject.email,modelObject.password)
                     var model = UserModel(user, modelObject.system)
