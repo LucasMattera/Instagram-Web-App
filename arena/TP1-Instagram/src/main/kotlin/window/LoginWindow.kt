@@ -32,7 +32,6 @@ class LoginWindow : SimpleWindow<LoginModel> {
         }
     }
 
-
     override fun addActions(mainPanel: Panel) {}
 
     override fun createFormPanel(mainPanel: Panel) {
@@ -57,6 +56,4 @@ class LoginWindow : SimpleWindow<LoginModel> {
             }
         }
     }
-
-
 }

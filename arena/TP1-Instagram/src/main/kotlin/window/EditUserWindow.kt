@@ -50,5 +50,4 @@ class EditUserWindow(owner: WindowOwner, model: EditUserModel) : Dialog<EditUser
             }
         }
     }
-
 }
