@@ -43,14 +43,15 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
         labelText(mainPanel,"Repeat Password: ")
         textBox(mainPanel,"passwordCheck")
 
-        Button(mainPanel) with {
+        /*Button(mainPanel) with {
             text = "Register"
             onClick {
                 var newUser = RegisterModel()
                 modelObject.register()
             }
         }
-
+      */
     }
 
 }
+
