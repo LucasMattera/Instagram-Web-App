@@ -10,10 +10,10 @@ import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.User
+import java.awt.Color
 
 class LoginWindow : SimpleWindow<LoginModel> {
     constructor(owner: WindowOwner, model: LoginModel) : super(owner, model)
-
 
     fun textBox(panel: Panel, propiedad: String, widthP : Int){
         TextBox(panel) with {
@@ -39,6 +39,7 @@ class LoginWindow : SimpleWindow<LoginModel> {
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Instagram"
+        iconImage = "instagram.png"
 
         labelText(mainPanel,"Email")
         textBox(mainPanel,"email", 250)
@@ -67,8 +68,12 @@ class LoginWindow : SimpleWindow<LoginModel> {
             }
         }
 
+        Label(mainPanel) with {
+            text = "Don't have an account?"
+            bgColor = Color.PINK
+        }
         Button(mainPanel) with {
-            caption = "Sign In"
+            caption = "Sign Up"
             onClick {
                 val model = RegisterModel(modelObject.system)
                 RegisterWindow(thisWindow, model).open()

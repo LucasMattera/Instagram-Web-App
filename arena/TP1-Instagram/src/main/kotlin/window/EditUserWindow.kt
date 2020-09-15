@@ -25,6 +25,7 @@ class EditUserWindow(owner: WindowOwner, model: EditUserModel) : Dialog<EditUser
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
+        iconImage = "instagram.png"
 
         labelText(mainPanel,"Name")
         textBox(mainPanel,"name")

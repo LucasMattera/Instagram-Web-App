@@ -36,6 +36,7 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
     override fun addActions(actionPanel: Panel) {
         Button(actionPanel) with {
             text = "Register"
+
             onClick {
 
                 if ( modelObject.name == "" || modelObject.email == "" || modelObject.password == "" || modelObject.image == "" ) {
@@ -69,6 +70,7 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Create User"
+        iconImage = "instagram.png"
 
         labelText(mainPanel,"Name: ")
         textBox(mainPanel,"name")
@@ -81,6 +83,8 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
 
         labelText(mainPanel,"Image: ")
         textBox(mainPanel,"image")
+
+        labelText(mainPanel,"You accept terms and conditions")
 
 
 

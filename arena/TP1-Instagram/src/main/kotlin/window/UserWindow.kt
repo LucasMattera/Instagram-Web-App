@@ -101,6 +101,7 @@ class UserWindow : SimpleWindow<UserModel> {
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "User View"
+        iconImage = "instagram.png"
 
         val idPanel = Panel(mainPanel)
         idPanel.layout = HorizontalLayout()
@@ -172,7 +173,7 @@ class UserWindow : SimpleWindow<UserModel> {
             column {
                 title = "Description"
                 bindContentsTo("description")
-                fixedSize = 250
+                fixedSize = 300
             }
             column {
                 title = "Landscape"

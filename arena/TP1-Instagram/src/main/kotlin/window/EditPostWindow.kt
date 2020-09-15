@@ -27,6 +27,7 @@ class EditPostWindow(owner: WindowOwner, model: DraftPostModel) : Dialog<DraftPo
 
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Post"
+        iconImage = "instagram.png"
 
         labelText(mainPanel,"Portrait")
         textBox(mainPanel,"portrait")
