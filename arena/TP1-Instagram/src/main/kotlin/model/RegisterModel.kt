@@ -12,7 +12,7 @@ class RegisterModel(val system: InstagramSystem) {
     var passwordCheck : String = ""
     var image : String = ""
 
-    fun register(name : String, email : String, pass : String,passCheck : String, image : String) : User {
+    fun register(name : String, email : String, pass : String,image : String) : User {
         return system.register(name, email, pass, image)
     }
 

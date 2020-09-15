@@ -2,16 +2,17 @@ package window
 
 import model.RegisterModel
 import model.UserModel
+import org.unq.ui.model.UsedEmail
+
 import org.uqbar.arena.kotlin.extensions.bindTo
 import org.uqbar.arena.kotlin.extensions.text
 import org.uqbar.arena.kotlin.extensions.thisWindow
 import org.uqbar.arena.kotlin.extensions.with
-import org.uqbar.arena.widgets.Button
-import org.uqbar.arena.widgets.Label
-import org.uqbar.arena.widgets.Panel
-import org.uqbar.arena.widgets.TextBox
+import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.Dialog
+
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.commons.model.exceptions.UserException
 
 class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<RegisterModel>(owner, model) {
 
@@ -26,24 +27,43 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
         }
     }
 
+    fun passwordField(panel:Panel,pass : String) {
+        PasswordField(panel) with {
+            bindTo(pass)
+        }
+    }
+
     override fun addActions(actionPanel: Panel) {
         Button(actionPanel) with {
             text = "Register"
             onClick {
 
-                val user = modelObject.register(modelObject.name,modelObject.email,modelObject.password,modelObject.passwordCheck,modelObject.image)
-                val usermodel = UserModel (user, modelObject.system)
-
-                thisWindow.close() ; UserWindow(thisWindow, usermodel).open()
+                if ( modelObject.name == "" || modelObject.email == "" || modelObject.password == "" || modelObject.image == "" ) {
+                    throw UserException("This field cannot by empty")
+                }
+                try {
+                    val user = modelObject.register(
+                        modelObject.name,
+                        modelObject.email,
+                        modelObject.password,
+                        modelObject.image,
+                    )
+                    val usermodel = UserModel(user, modelObject.system)
+                    thisWindow.close() ; UserWindow(thisWindow, usermodel).open()
+                } catch ( e : UsedEmail ) {
+                    throw UserException(e.message)
+                }
 
             }
         }
+
         Button(actionPanel) with {
             text = "Cancel"
             onClick {
                 cancel()
             }
         }
+
 
     }
 
@@ -57,10 +77,11 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
         textBox(mainPanel,"email")
 
         labelText(mainPanel,"Password: ")
-        textBox(mainPanel,"password")
+        passwordField(mainPanel,"password")
 
-        labelText(mainPanel,"Repeat Password: ")
-        textBox(mainPanel,"passwordCheck")
+        labelText(mainPanel,"Image: ")
+        textBox(mainPanel,"image")
+
 
 
     }

@@ -73,6 +73,7 @@ class LoginWindow : SimpleWindow<LoginModel> {
                 val model = RegisterModel(modelObject.system)
                 RegisterWindow(thisWindow, model).open()
             }
+
         }
     }
 }
