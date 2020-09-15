@@ -1,6 +1,7 @@
 package window
 
 import model.RegisterModel
+import model.UserModel
 import org.uqbar.arena.kotlin.extensions.bindTo
 import org.uqbar.arena.kotlin.extensions.text
 import org.uqbar.arena.kotlin.extensions.thisWindow
@@ -29,7 +30,12 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
         Button(actionPanel) with {
             text = "Register"
             onClick {
-                accept()
+
+                val user = modelObject.register(modelObject.name,modelObject.email,modelObject.password,modelObject.passwordCheck,modelObject.image)
+                val usermodel = UserModel (user, modelObject.system)
+
+                thisWindow.close() ; UserWindow(thisWindow, usermodel).open()
+
             }
         }
         Button(actionPanel) with {
@@ -60,4 +66,3 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
     }
 
 }
-

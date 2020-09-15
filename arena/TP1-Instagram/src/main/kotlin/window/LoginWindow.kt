@@ -71,24 +71,8 @@ class LoginWindow : SimpleWindow<LoginModel> {
             caption = "Sign In"
             onClick {
                 val model = RegisterModel(modelObject.system)
-                val view = RegisterWindow(thisWindow,model)
-                val user = model.register(model.name,model.email,model.password,model.passwordCheck,model.image)
-                view.onAccept {
-                    thisWindow.close()
-                    view.close()
-                    UserWindow(thisWindow, userToUserModel(user))
-
-                }
-                view.onCancel {
-                    view.close() ;
-                }
-                view.open()
+                RegisterWindow(thisWindow, model).open()
             }
         }
-    }
-
-    fun userToUserModel(user : User) : UserModel {
-        val user = User(user.id,user.name,user.email,user.image,user.password,user.followers)
-        return UserModel(user,modelObject.system)
     }
 }
