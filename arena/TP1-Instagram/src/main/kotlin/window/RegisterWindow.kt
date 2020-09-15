@@ -4,10 +4,7 @@ import model.RegisterModel
 import model.UserModel
 import org.unq.ui.model.UsedEmail
 
-import org.uqbar.arena.kotlin.extensions.bindTo
-import org.uqbar.arena.kotlin.extensions.text
-import org.uqbar.arena.kotlin.extensions.thisWindow
-import org.uqbar.arena.kotlin.extensions.with
+import org.uqbar.arena.kotlin.extensions.*
 import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.Dialog
 
@@ -41,6 +38,9 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
 
                 if ( modelObject.name == "" || modelObject.email == "" || modelObject.password == "" || modelObject.image == "" ) {
                     throw UserException("This field cannot by empty")
+                }
+                if (!( modelObject.passwordAndPasswordCheckAreEqual(modelObject.password, modelObject.passwordCheck))) {
+                    throw UserException("Passwords do not match")
                 }
                 try {
                     val user = modelObject.register(
@@ -78,14 +78,16 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
         labelText(mainPanel,"Email: ")
         textBox(mainPanel,"email")
 
-        labelText(mainPanel,"Password: ")
-        passwordField(mainPanel,"password")
-
         labelText(mainPanel,"Image: ")
         textBox(mainPanel,"image")
 
-        labelText(mainPanel,"You accept terms and conditions")
+        labelText(mainPanel,"Password: ")
+        passwordField(mainPanel,"password")
 
+        labelText(mainPanel,"PasswordCheck: ")
+        passwordField(mainPanel,"passwordCheck")
+
+        labelText(mainPanel,"You accept terms and conditions")
 
 
     }

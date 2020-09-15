@@ -16,4 +16,8 @@ class RegisterModel(val system: InstagramSystem) {
         return system.register(name, email, pass, image)
     }
 
+    fun passwordAndPasswordCheckAreEqual(password: String, passwordCheck: String): Boolean {
+        return (password == passwordCheck)
+    }
+
 }

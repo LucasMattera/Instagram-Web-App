@@ -70,7 +70,7 @@ class LoginWindow : SimpleWindow<LoginModel> {
 
         Label(mainPanel) with {
             text = "Don't have an account?"
-            bgColor = Color.PINK
+            bgColor = Color.CYAN
         }
         Button(mainPanel) with {
             caption = "Sign Up"
