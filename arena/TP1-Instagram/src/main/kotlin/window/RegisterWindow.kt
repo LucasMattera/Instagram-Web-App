@@ -36,7 +36,7 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
 
             onClick {
 
-                if ( modelObject.name == "" || modelObject.email == "" || modelObject.password == "" || modelObject.image == "" ) {
+                if ( modelObject.tieneCamposVacio()) {
                     throw UserException("This field cannot by empty")
                 }
                 if (!( modelObject.passwordAndPasswordCheckAreEqual(modelObject.password, modelObject.passwordCheck))) {
