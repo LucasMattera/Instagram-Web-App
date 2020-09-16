@@ -39,15 +39,6 @@ class UserWindow : SimpleWindow<UserModel> {
         }
     }
 
-    fun algunosDeLosCamposDelUsuarioEstanVacios(user: EditUserModel): Boolean {
-       return  (user.name == "" ||user.password == "" || user.image == "")
-    }
-
-    fun algunosDeLosCamposDelPostEstanVacios(post : DraftPostModel) : Boolean {
-        return (post.portrait == "" || post.landscape == "" || post.description == "")
-    }
-
-
     override fun addActions(actionPanel: Panel) {
         Button(actionPanel) with {
             caption = "Add Post"
@@ -56,7 +47,7 @@ class UserWindow : SimpleWindow<UserModel> {
                 val post = DraftPostModel()
                 val view = EditPostWindow(thisWindow, post)
                 view.onAccept {
-                    if ( algunosDeLosCamposDelPostEstanVacios(post)) {
+                    if ( post.algunosDeLosCamposDelPostEstanVacios()) {
                         throw UserException(" The field cannot be empty ")
                     }
                     modelObject.addPost(post)
@@ -75,7 +66,7 @@ class UserWindow : SimpleWindow<UserModel> {
                 val post = DraftPostModel(modelObject.selected!!)
                 val view = EditPostWindow(thisWindow, post)
                 view.onAccept {
-                    if (algunosDeLosCamposDelPostEstanVacios(post)) {
+                    if (post.algunosDeLosCamposDelPostEstanVacios()) {
                         throw UserException("The field cannot be empty")
                     }
                     modelObject.editPost(modelObject.selected!!.id, post)
@@ -131,7 +122,7 @@ class UserWindow : SimpleWindow<UserModel> {
                 val user = EditUserModel(modelObject.name,modelObject.password,modelObject.image)
                 val view = EditUserWindow(thisWindow,user)
                 view.onAccept {
-                    if ( algunosDeLosCamposDelUsuarioEstanVacios (user)) {
+                    if ( user.algunosDeLosCamposDelUsuarioEstanVacios ()) {
                         throw UserException(" The field cannot be empty ")
                     } else {
                         modelObject.editUser(user)

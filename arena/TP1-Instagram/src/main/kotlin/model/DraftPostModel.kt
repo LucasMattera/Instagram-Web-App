@@ -15,4 +15,8 @@ class DraftPostModel() {
 
     }
 
+    fun algunosDeLosCamposDelPostEstanVacios() : Boolean {
+        return (portrait == "" || landscape == "" || description == "")
+    }
+
 }

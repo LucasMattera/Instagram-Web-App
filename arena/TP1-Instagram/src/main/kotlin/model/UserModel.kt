@@ -53,6 +53,4 @@ class UserModel(user : User,val system : InstagramSystem) {
         posts= allPost()
 
     }
-
-
 }

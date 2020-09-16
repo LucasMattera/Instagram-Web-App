@@ -47,15 +47,12 @@ class LoginWindow : SimpleWindow<LoginModel> {
         labelText(mainPanel,"Password")
         passwordField(mainPanel, "password")
 
-        fun algunosDeLosCamposEstanVacios(modelObject: LoginModel): Boolean {
-            return ( modelObject.email == "" || modelObject.password == "")
-        }
 
         Button(mainPanel) with {
             caption = "Login"
             onClick {
 
-                if ( algunosDeLosCamposEstanVacios (modelObject)) {
+                if ( modelObject.algunosDeLosCamposEstanVacios ()) {
                     throw UserException(" The field cannot be empty ")
                 }
                 try {
