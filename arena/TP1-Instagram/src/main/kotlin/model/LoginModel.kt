@@ -11,7 +11,7 @@ class LoginModel (val system: InstagramSystem) {
         return system.login(email,password)
     }
 
-    fun algunosDeLosCamposEstanVacios(): Boolean {
+    fun someLoginFieldAreEmpty(): Boolean {
         return ( email == "" || password == "")
     }
 

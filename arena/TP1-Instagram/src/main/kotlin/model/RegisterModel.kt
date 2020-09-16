@@ -16,10 +16,10 @@ class RegisterModel(val system: InstagramSystem) {
         return system.register(name, email, pass, image)
     }
 
-    fun passwordAndPasswordCheckAreEqual(password: String, passwordCheck: String): Boolean {
+    fun passwordAndPasswordCheckAreEqual(): Boolean {
         return (password == passwordCheck)
     }
-    fun tieneCamposVacio () : Boolean{
+    fun someRegisterFieldAreEmpty() : Boolean{
         return (name == "" || email == "" || password == "" || image == "" || passwordCheck == "")
 
     }

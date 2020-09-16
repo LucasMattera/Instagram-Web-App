@@ -47,7 +47,7 @@ class UserWindow : SimpleWindow<UserModel> {
                 val post = DraftPostModel()
                 val view = EditPostWindow(thisWindow, post)
                 view.onAccept {
-                    if ( post.algunosDeLosCamposDelPostEstanVacios()) {
+                    if ( post.somePostFieldAreEmpty()) {
                         throw UserException(" The field cannot be empty ")
                     }
                     modelObject.addPost(post)
@@ -66,7 +66,7 @@ class UserWindow : SimpleWindow<UserModel> {
                 val post = DraftPostModel(modelObject.selected!!)
                 val view = EditPostWindow(thisWindow, post)
                 view.onAccept {
-                    if (post.algunosDeLosCamposDelPostEstanVacios()) {
+                    if (post.somePostFieldAreEmpty()) {
                         throw UserException("The field cannot be empty")
                     }
                     modelObject.editPost(modelObject.selected!!.id, post)
@@ -122,7 +122,7 @@ class UserWindow : SimpleWindow<UserModel> {
                 val user = EditUserModel(modelObject.name,modelObject.password,modelObject.image)
                 val view = EditUserWindow(thisWindow,user)
                 view.onAccept {
-                    if ( user.algunosDeLosCamposDelUsuarioEstanVacios ()) {
+                    if ( user.someUserFieldAreEmpty ()) {
                         throw UserException(" The field cannot be empty ")
                     } else {
                         modelObject.editUser(user)

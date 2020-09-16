@@ -15,7 +15,7 @@ class DraftPostModel() {
 
     }
 
-    fun algunosDeLosCamposDelPostEstanVacios() : Boolean {
+    fun somePostFieldAreEmpty() : Boolean {
         return (portrait == "" || landscape == "" || description == "")
     }
 

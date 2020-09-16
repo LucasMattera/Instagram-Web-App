@@ -9,7 +9,6 @@ import org.uqbar.arena.windows.SimpleWindow
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.commons.model.exceptions.UserException
 import org.unq.ui.model.NotFound
-import org.unq.ui.model.User
 import java.awt.Color
 
 class LoginWindow : SimpleWindow<LoginModel> {
@@ -52,7 +51,7 @@ class LoginWindow : SimpleWindow<LoginModel> {
             caption = "Login"
             onClick {
 
-                if ( modelObject.algunosDeLosCamposEstanVacios ()) {
+                if ( modelObject.someLoginFieldAreEmpty ()) {
                     throw UserException(" The field cannot be empty ")
                 }
                 try {

@@ -36,10 +36,10 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
 
             onClick {
 
-                if ( modelObject.tieneCamposVacio()) {
+                if ( modelObject.someRegisterFieldAreEmpty()) {
                     throw UserException("This field cannot by empty")
                 }
-                if (!( modelObject.passwordAndPasswordCheckAreEqual(modelObject.password, modelObject.passwordCheck))) {
+                if (!( modelObject.passwordAndPasswordCheckAreEqual())) {
                     throw UserException("Passwords do not match")
                 }
                 try {
