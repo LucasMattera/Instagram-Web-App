@@ -1,7 +1,7 @@
+import controller.LoginController
 import controller.PostController
 import io.javalin.Javalin
-import io.javalin.apibuilder.ApiBuilder.get
-import io.javalin.apibuilder.ApiBuilder.path
+import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.core.util.RouteOverviewPlugin
 import org.unq.ui.bootstrap.getInstagramSystem
 
@@ -16,13 +16,18 @@ class InstagramApi {
         app.start(7000)
         val instagramSystem = getInstagramSystem()
         val postController = PostController(instagramSystem)
+        val loginController = LoginController(instagramSystem)
 
         app.routes {
-            path("/posts") {
+            path("posts") {
                 get(postController::getPosts)
                 path(":id") {
                     get(postController::getPost)
                 }
+            }
+
+            path("login") {
+                //post(loginController::createLogin())
             }
         }
     }
