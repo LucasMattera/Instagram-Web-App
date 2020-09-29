@@ -12,7 +12,7 @@ class PostController(private val instagramSystem : InstagramSystem) {
         try {
             ctx.json(instagramSystem.getPost(postId))
         } catch (e: NotFound) {
-            throw NotFoundResponse(e.message!!)
+            ctx.status(404).json(NotFoundResponse(e.message!!))
         }
     }
 
