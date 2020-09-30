@@ -4,6 +4,7 @@ import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.*
 import io.javalin.core.util.RouteOverviewPlugin
 import org.unq.ui.bootstrap.getInstagramSystem
+import org.unq.ui.model.UsedEmail
 
 class InstagramApi {
 
@@ -21,13 +22,14 @@ class InstagramApi {
         app.routes {
             path("posts") {
                 get(postController::getPosts)
+
                 path(":id") {
                     get(postController::getPost)
                 }
             }
 
             path("login") {
-                //post(loginController::createLogin())
+                post(loginController::loginUser)
             }
         }
     }
