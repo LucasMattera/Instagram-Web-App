@@ -4,7 +4,7 @@ import io.javalin.http.Context
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.User
 
-//data class User(val email: String, val password: String )
+data class UserLogin o Adapter(val email: String, val password: String )
 
 class LoginController(private val instagramSystem : InstagramSystem) {
 
