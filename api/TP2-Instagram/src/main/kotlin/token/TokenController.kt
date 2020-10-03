@@ -4,9 +4,9 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTCreator
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import controller.UserLoginAdapter
 import javalinjwt.JWTGenerator
 import javalinjwt.JWTProvider
+import org.unq.ui.model.User
 
 data class UserTokenAdapter(val id: String, val email: String, val password: String )
 
@@ -26,7 +26,7 @@ class TokenController {
 
     var provider = JWTProvider(algorithm, generator, verifier)
 
-    fun generateToken(usr: UserTokenAdapter): String {
+    fun generateToken(usr: User): String {
         return provider.generateToken(usr)
     }
 
