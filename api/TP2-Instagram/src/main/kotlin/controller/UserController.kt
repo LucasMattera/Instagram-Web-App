@@ -4,10 +4,13 @@ import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
+import org.unq.ui.model.UsedEmail
 import org.unq.ui.model.User
 import token.TokenController
 
-data class UserLoginAdapter(val email: String, val password: String)
+data class UserLoginDTO(val email: String, val password: String)
+data class UserRegisterDTO(val name:String,val email:String,val password: String,val image:String)
+
 
 /* atributos originales de user
     id: kotlin.String,
@@ -17,25 +20,36 @@ data class UserLoginAdapter(val email: String, val password: String)
     image: kotlin.String,
     followers: kotlin.collections.MutableList<org.unq.ui.model.User>
  */
-class UserDTO(usr: User){
-    val id = usr.id
-    val name = usr.name
-    val email = usr.email
-    val password = usr.password
-    val image = usr.image
+
+class UserDTO(user : User) {
+    val id = user.id ;
+    val name = user.name ;
+    val email = user.email ;
 }
 
 class UserController(private val instagramSystem : InstagramSystem){
 
-    val tknCtrl = TokenController()
+    val token = TokenController()
 
-    fun loginUser(ctx: Context) {
-        val usrLogin = ctx.body<UserDTO>()  //aca se matchea el dataclass con el json que se escribe en postman
+    fun login(ctx: Context) {
+        val userLogin = ctx.body<UserLoginDTO>()  //aca se matchea el dataclass con el json que se escribe en postman
         try {
-            val usr = instagramSystem.login(usrLogin.email, usrLogin.password)
-            ctx.header("Authorization", tknCtrl.generateToken(usr))
-            ctx.json(UserDTO(usr))
+            val user = instagramSystem.login(userLogin.email, userLogin.password)
+            ctx.header("Authorization", token.generateToken(user))
+            ctx.json(UserDTO(user))
         } catch(e: NotFound){
+            throw BadRequestResponse()
+        }
+    }
+
+
+    fun register(ctx: Context) {
+        val userRegister = ctx.body<UserRegisterDTO>()
+        try {
+            val user = instagramSystem.register(userRegister.name, userRegister.email, userRegister.password, userRegister.image)
+            ctx.header("Authorization", token.generateToken(user))
+            ctx.json(UserDTO(user))
+        } catch (e: NotFound) { // MEJORAR
             throw BadRequestResponse()
         }
     }
