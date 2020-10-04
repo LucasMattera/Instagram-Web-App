@@ -33,6 +33,9 @@ class InstagramApi {
             path("login") {
                 post(userController::login, setOf(IgRoles.ANYONE))
             }
+            path("register") {
+                post(userController::register, setOf(IgRoles.ANYONE))
+            }
         }
     }
 }
