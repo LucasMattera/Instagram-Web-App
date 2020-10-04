@@ -8,6 +8,7 @@ import org.unq.ui.model.NotFound
 class PostController(private val instagramSystem : InstagramSystem) {
 
     fun getPost(ctx: Context) {
+
         val postId = ctx.pathParam("id")
         try {
             ctx.json(instagramSystem.getPost(postId))
@@ -16,7 +17,4 @@ class PostController(private val instagramSystem : InstagramSystem) {
         }
     }
 
-    fun getPosts(ctx: Context) {
-        ctx.json(instagramSystem.posts)
-    }
 }
