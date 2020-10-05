@@ -26,9 +26,9 @@ class InstagramAccessManager(val igSys: InstagramSystem) : AccessManager {
                     ctx.attribute("usrId", usrId)
                     handler.handle(ctx)
                 } catch(e: NotValidToken){
-                    throw  UnauthorizedResponse("not valid token")
+                    throw  UnauthorizedResponse("Not valid Token")
                 } catch(e: NotFound){
-                    throw UnauthorizedResponse("user not found")
+                    throw UnauthorizedResponse("Not valid Token")
                 }
             }
         }

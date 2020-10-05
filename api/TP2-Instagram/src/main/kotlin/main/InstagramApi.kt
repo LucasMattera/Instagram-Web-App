@@ -26,7 +26,12 @@ class InstagramApi {
         app.routes {
             path("post") {
                 path(":id") {
-                    get(postController::getPost, setOf(IgRoles.USER))
+                    get(postController::getPostById, setOf(IgRoles.USER))
+                }
+            }
+            path("user") {
+                path(":id") {
+                    get(userController::getUserById, setOf(IgRoles.USER))
                 }
             }
 

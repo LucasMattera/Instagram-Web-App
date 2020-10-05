@@ -21,24 +21,26 @@ data class UserRegisterDTO(val name:String,val email:String,val password: String
     followers: kotlin.collections.MutableList<org.unq.ui.model.User>
  */
 
-class UserDTO(user : User) {
-    val id = user.id ;
-    val name = user.name ;
-    val email = user.email ;
-}
 
 class UserController(private val instagramSystem : InstagramSystem){
 
     val token = TokenController()
 
     fun login(ctx: Context) {
-        val userLogin = ctx.body<UserLoginDTO>()  //aca se matchea el dataclass con el json que se escribe en postman
+        val userLogin = ctx.body<UserLoginDTO>()
         try {
             val user = instagramSystem.login(userLogin.email, userLogin.password)
             ctx.header("Authorization", token.generateToken(user))
-            ctx.json(UserDTO(user))
+            ctx.status(200)
+            ctx.json(
+                    mapOf("result" to "ok")
+            )
         } catch(e: NotFound){
-            throw BadRequestResponse()
+            ctx.status(404)
+            ctx.json(
+                    mapOf("result" to "error",
+                          "message" to e.message)
+            )
         }
     }
 
@@ -48,10 +50,24 @@ class UserController(private val instagramSystem : InstagramSystem){
         try {
             val user = instagramSystem.register(userRegister.name, userRegister.email, userRegister.password, userRegister.image)
             ctx.header("Authorization", token.generateToken(user))
-            ctx.json(UserDTO(user))
-        } catch (e: NotFound) { // MEJORAR
-            throw BadRequestResponse()
+            ctx.status(201)
+            ctx.json(
+                    mapOf("result" to "ok")
+            )
+        } catch (e: UsedEmail) {
+            ctx.status(404)
+            ctx.json(
+                    mapOf("result" to "error",
+                          "message" to e.message)
+            )
         }
+    }
+
+
+    fun getUserById(ctx: Context) {
+        val userId = ctx.pathParam("id")
+        val user = instagramSystem.getUser(userId)
+
     }
 
 }
