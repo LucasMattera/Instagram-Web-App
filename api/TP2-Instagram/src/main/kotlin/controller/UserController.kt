@@ -12,16 +12,6 @@ data class UserLoginDTO(val email: String, val password: String)
 data class UserRegisterDTO(val name:String,val email:String,val password: String,val image:String)
 
 
-/* atributos originales de user
-    id: kotlin.String,
-    name: kotlin.String,
-    email: kotlin.String,
-    password: kotlin.String,
-    image: kotlin.String,
-    followers: kotlin.collections.MutableList<org.unq.ui.model.User>
- */
-
-
 class UserController(private val instagramSystem : InstagramSystem){
 
     val token = TokenController()
