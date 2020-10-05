@@ -30,20 +30,18 @@ data class PostDTO(val id: String,
 
 
 class PostController(private val instagramSystem : InstagramSystem) {
-
-    private fun getUserId(ctx: Context): String {
-        return ctx.attribute<String>("userId") ?: throw BadRequestResponse("Not found user")
-    }
+    
 
     fun getPostById(ctx: Context) {
         val postId = ctx.pathParam("id")
-        val post = instagramSystem.getPost(postId)
-        var likesPost = post.likes.map {
-            UserPostDTO(it.name, it.image) }.toMutableList()
-        var commentPost = post.comments.map {
-            CommentDTO(it.id, it.body, UserPostDTO(post.user.name,post.user.image))}.toMutableList()
-        var userPost = UserPostDTO(post.user.name,post.user.image)
         try {
+            val post = instagramSystem.getPost(postId)
+            var likesPost = post.likes.map {
+                UserPostDTO(it.name, it.image) }.toMutableList()
+            var commentPost = post.comments.map {
+                CommentDTO(it.id, it.body, UserPostDTO(post.user.name,post.user.image))}.toMutableList()
+            var userPost = UserPostDTO(post.user.name,post.user.image)
+
             ctx.json(
                 PostDTO(postId,post.description,post.portrait,post.landscape,post.date,likesPost,userPost,commentPost))
         } catch (e: NotFound ) {
@@ -52,6 +50,7 @@ class PostController(private val instagramSystem : InstagramSystem) {
                     mapOf("result" to "Not found post with : $postId")
             )
         }
+
     }
 
 

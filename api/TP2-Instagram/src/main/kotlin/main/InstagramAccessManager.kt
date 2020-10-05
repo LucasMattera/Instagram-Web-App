@@ -30,7 +30,7 @@ class InstagramAccessManager(val igSys: InstagramSystem) : AccessManager {
                     throw  UnauthorizedResponse("Not valid Token")
                 } catch(e: NotFound){
 
-                    throw UnauthorizedResponse("Not valid Token")
+                    throw UnauthorizedResponse("asd")
                 }
             }
         }

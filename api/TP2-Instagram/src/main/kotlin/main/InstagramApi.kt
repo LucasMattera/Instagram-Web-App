@@ -27,14 +27,15 @@ class InstagramApi {
             path("post") {
                 path(":id") {
                     get(postController::getPostById, setOf(IgRoles.USER))
+                    path("like") {
+                        put(postController::modifyPost, setOf(IgRoles.USER))
+                    }
                 }
             }
             path("user") {
                 path(":id") {
                     get(userController::getUserById, setOf(IgRoles.USER))
-                    path("like") {
-                        put(postController::modifyPost, setOf(IgRoles.USER))
-                    }
+
                 }
             }
 
