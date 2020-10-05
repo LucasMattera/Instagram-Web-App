@@ -22,9 +22,9 @@ data class UserRegisterDTO(val name:String,val email:String,val password: String
  */
 
 class UserDTO(user : User) {
-    val id = user.id ;
-    val name = user.name ;
-    val email = user.email ;
+    val id = user.id
+    val name = user.name
+    val email = user.email
 }
 
 class UserController(private val instagramSystem : InstagramSystem){
