@@ -1,11 +1,9 @@
 package controller
 
-import io.javalin.http.BadRequestResponse
 import io.javalin.http.Context
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
-import org.unq.ui.model.User
 import token.TokenController
 import java.time.LocalDateTime
 
@@ -26,13 +24,13 @@ data class UserGetDTO(val name:String,
 
 class UserController(private val instagramSystem : InstagramSystem){
 
-    val token = TokenController()
+    val tokenJWT = TokenController()
 
     fun login(ctx: Context) {
         val userLogin = ctx.body<UserLoginDTO>()
         try {
             val user = instagramSystem.login(userLogin.email, userLogin.password)
-            ctx.header("Authorization", token.generateToken(user))
+            ctx.header("Authorization", tokenJWT.generateToken(user))
             ctx.status(200)
             ctx.json(
                     mapOf("result" to "ok")
@@ -51,7 +49,7 @@ class UserController(private val instagramSystem : InstagramSystem){
         val userRegister = ctx.body<UserRegisterDTO>()
         try {
             val user = instagramSystem.register(userRegister.name, userRegister.email, userRegister.password, userRegister.image)
-            ctx.header("Authorization", token.generateToken(user))
+            ctx.header("Authorization", tokenJWT.generateToken(user))
             ctx.status(201)
             ctx.json(
                     mapOf("result" to "ok")
@@ -85,6 +83,27 @@ class UserController(private val instagramSystem : InstagramSystem){
             ctx.status(404)
             ctx.json(
                 mapOf("result" to "Not found post with : $userId")
+            )
+        }
+    }
+
+
+    fun followerUser(ctx: Context) {
+        val token = ctx.header("Authorization")
+        val toUserId = tokenJWT.validateToken(token!!)
+        val fromUser = ctx.pathParam("id")
+        try {
+            instagramSystem.updateFollower(fromUser,toUserId)
+            ctx.status(200)
+            ctx.json(
+                mapOf(
+                    "result" to "ok"
+                )
+            )
+        } catch (e: NotFound) {
+        ctx.status(404)
+        ctx.json(
+            mapOf("result" to "Not found user with : $fromUser")
             )
         }
     }

@@ -30,7 +30,10 @@ data class PostDTO(val id: String,
 
 
 class PostController(private val instagramSystem : InstagramSystem) {
-    
+
+    private fun getUserId(ctx: Context): String {
+        return ctx.attribute<String>("userId") ?: throw BadRequestResponse("Not found user")
+    }
 
     fun getPostById(ctx: Context) {
         val postId = ctx.pathParam("id")
@@ -54,7 +57,7 @@ class PostController(private val instagramSystem : InstagramSystem) {
     }
 
 
-    fun modifyPost(ctx: Context) {
+    fun likePost(ctx: Context) {
             val userId = getUserId(ctx)
             val postId = ctx.pathParam("id")
         try {
