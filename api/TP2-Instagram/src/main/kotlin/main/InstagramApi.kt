@@ -26,12 +26,24 @@ class InstagramApi {
         app.routes {
             path("post") {
                 path(":id") {
-                    get(postController::getPost, setOf(IgRoles.USER))
+                    get(postController::getPostById, setOf(IgRoles.USER))
+                    path("like") {
+                        put(postController::likePost, setOf(IgRoles.USER))
+                    }
+                }
+            }
+            path("user") {
+                path(":id") {
+                    get(userController::getUserById, setOf(IgRoles.USER))
+                    path("follow") {
+                        put(userController::followerUser, setOf(IgRoles.USER))
+                    }
                 }
             }
 
             path("login") {
                 post(userController::login, setOf(IgRoles.ANYONE))
+
             }
             path("register") {
                 post(userController::register, setOf(IgRoles.ANYONE))
