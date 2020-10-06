@@ -1,6 +1,7 @@
 package controller
 
 import io.javalin.http.Context
+import javafx.animation.Timeline
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
@@ -21,6 +22,14 @@ data class UserGetDTO(val name:String,
                       val image:String,
                       val followers: MutableList<UserPostDTO>,
                       val posts: MutableList<PostUserDTO>)
+
+data class UserDTO (
+    val name: String,
+    val image: String,
+    val followers: MutableList<UserPostDTO>,
+    val timeline : MutableList<PostUserDTO>
+
+)
 
 class UserController(private val instagramSystem : InstagramSystem){
 
@@ -106,6 +115,39 @@ class UserController(private val instagramSystem : InstagramSystem){
             mapOf("result" to "Not found user with : $fromUser")
             )
         }
+    }
+
+    fun getUser (ctx: Context){
+        val token = ctx.header("Authorization")
+
+        try {
+            val userId = tokenJWT.validateToken(token!!)
+            val user = instagramSystem.getUser(userId)
+            var userPost = UserPostDTO(user.name,user.image)
+
+            val userTimeline = instagramSystem.timeline(userId).map {
+                val likes = it.likes.map {
+                    UserPostDTO(it.name,it.image)}.toMutableList()
+                PostUserDTO(it.id, it.description, it.portrait, it.landscape, it.date, likes, userPost)
+            }.toMutableList()
+
+            val followersUser = user.followers.map {
+                UserPostDTO(it.name,it.image) }.toMutableList()
+
+
+                ctx.status(200)
+                ctx.json(
+                    UserDTO(user.name, user.image, followersUser ,userTimeline)
+                )
+        } catch (e:NotFound){
+            ctx.status(404).json(e.message!!)
+
+
+        }
+
+
+
+
     }
 }
 
