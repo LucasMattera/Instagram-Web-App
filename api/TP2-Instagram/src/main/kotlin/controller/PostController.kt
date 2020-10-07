@@ -3,8 +3,9 @@ package controller
 import io.javalin.http.BadRequestResponse
 import org.unq.ui.model.InstagramSystem
 import io.javalin.http.Context
-import io.javalin.http.NotFoundResponse
+import org.unq.ui.model.DraftComment
 import org.unq.ui.model.NotFound
+import token.TokenController
 import java.time.LocalDateTime
 
 data class OkResponse(val status: String = "Ok")
@@ -29,7 +30,10 @@ data class PostDTO(val id: String,
 )
 
 
+
 class PostController(private val instagramSystem : InstagramSystem) {
+
+
 
     private fun getUserId(ctx: Context): String {
         return ctx.attribute<String>("userId") ?: throw BadRequestResponse("Not found user")
@@ -62,6 +66,21 @@ class PostController(private val instagramSystem : InstagramSystem) {
             val postId = ctx.pathParam("id")
         try {
             instagramSystem.updateLike(postId, userId)
+            ctx.json(OkResponse())
+        } catch (e: NotFound) {
+            ctx.status(404).json(ErrorResponse("not found post with id $postId"))
+        }
+    }
+
+    fun commentPost(ctx: Context) {
+
+        val user = getUserId(ctx)
+        val postId = ctx.pathParam("id")
+        val body = ctx.body<CommentDTO>().body
+        val comment = DraftComment( body)
+        try {
+            instagramSystem.addComment(postId, user, comment)
+            ctx.status(200)
             ctx.json(OkResponse())
         } catch (e: NotFound) {
             ctx.status(404).json(ErrorResponse("not found post with id $postId"))

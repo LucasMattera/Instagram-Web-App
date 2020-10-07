@@ -135,19 +135,13 @@ class UserController(private val instagramSystem : InstagramSystem){
                 UserPostDTO(it.name,it.image) }.toMutableList()
 
 
-                ctx.status(200)
-                ctx.json(
+            ctx.status(200)
+            ctx.json(
                     UserDTO(user.name, user.image, followersUser ,userTimeline)
-                )
+            )
         } catch (e:NotFound){
             ctx.status(404).json(e.message!!)
-
-
         }
-
-
-
-
     }
 }
 
