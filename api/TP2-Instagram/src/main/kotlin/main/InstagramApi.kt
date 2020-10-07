@@ -21,7 +21,7 @@ class InstagramApi {
             it.accessManager(InstagramAccessManager(instagramSystem))
         }
 
-        app.start(7777)
+        app.start(7000)
 
         app.routes {
             path("post") {

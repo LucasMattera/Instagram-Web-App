@@ -34,7 +34,6 @@ data class PostDTO(val id: String,
 class PostController(private val instagramSystem : InstagramSystem) {
 
 
-
     private fun getUserId(ctx: Context): String {
         return ctx.attribute<String>("userId") ?: throw BadRequestResponse("Not found user")
     }
@@ -62,8 +61,8 @@ class PostController(private val instagramSystem : InstagramSystem) {
 
 
     fun likePost(ctx: Context) {
-            val userId = getUserId(ctx)
-            val postId = ctx.pathParam("id")
+        val userId = getUserId(ctx)
+        val postId = ctx.pathParam("id")
         try {
             instagramSystem.updateLike(postId, userId)
             ctx.json(OkResponse())
@@ -72,12 +71,12 @@ class PostController(private val instagramSystem : InstagramSystem) {
         }
     }
 
+
     fun commentPost(ctx: Context) {
 
         val user = getUserId(ctx)
         val postId = ctx.pathParam("id")
-        val body = ctx.body<CommentDTO>().body
-        val comment = DraftComment( body)
+        val comment = ctx.body<DraftComment>()
         try {
             instagramSystem.addComment(postId, user, comment)
             ctx.status(200)
