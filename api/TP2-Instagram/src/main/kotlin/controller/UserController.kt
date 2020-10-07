@@ -4,6 +4,7 @@ import dto.*
 import io.javalin.http.Context
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
+import org.unq.ui.model.UsedEmail
 import token.TokenController
 import java.time.LocalDateTime
 
@@ -12,25 +13,28 @@ class UserController(private val instagramSystem : InstagramSystem){
     val tokenJWT = TokenController()
 
     private fun validateLoginUser(ctx : Context) {
-        val user = ctx.body<UserLoginDTO>()
-        require("^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$"
-            .toRegex()
-            .matches(user.email)) { "Invalid email address" }
-        require(user.password.isNotEmpty()) { "Password cannot be empty" }
+        val user = ctx.bodyValidator<UserLoginDTO>()
+            .check({it.email.isNotEmpty()}, "Email cannot be empty")
+            .check({ "^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$"
+                .toRegex()
+                .matches(it.email) }, "Invalid email address")
+            .check({it.password.isNotEmpty()}, "Password cannot by empty")
+            .get()
     }
 
     private fun validateRegisterUser(ctx : Context) {
-        val user = ctx.body<UserRegisterDTO>()
-        require(user.name.isNotEmpty()) { "Name cannot be empty" }
-        require("^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$"
-            .toRegex()
-            .matches(user.email)) { "Invalid email address" }
-        require(user.password.isNotEmpty()) { "Password cannot be empty" }
-        require(user.image.isNotEmpty()) { "Image cannot be empty" }
+        val user = ctx.bodyValidator<UserRegisterDTO>()
+            .check({ it.name.isNotEmpty()}, "Name cannot be empty" )
+            .check({ "^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$"
+                .toRegex()
+                .matches(it.email) }, "Invalid email address")
+            .check({it.password.isNotEmpty()}, "Password cannot be empty" )
+            .check({it.image.isNotEmpty()} , "Image cannot be empty" )
+            .get()
     }
 
 
-
+    
     fun login(ctx: Context) {
         val userLogin = ctx.body<UserLoginDTO>()
         try {
@@ -41,7 +45,7 @@ class UserController(private val instagramSystem : InstagramSystem){
             ctx.json(
                     mapOf("result" to "ok")
             )
-        } catch(e: Exception){
+        } catch(e: NotFound){
             ctx.status(404)
             ctx.json(
                     mapOf("result" to "error",
@@ -61,7 +65,7 @@ class UserController(private val instagramSystem : InstagramSystem){
             ctx.json(
                     mapOf("result" to "ok")
             )
-        } catch (e: Exception) {
+        } catch (e: UsedEmail) {
             ctx.status(404)
             ctx.json(
                     mapOf("result" to "error",

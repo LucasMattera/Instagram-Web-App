@@ -23,7 +23,7 @@ class PostController(private val instagramSystem : InstagramSystem) {
             var likesPost = post.likes.map {
                 UserPostDTO(it.name, it.image) }.toMutableList()
             var commentPost = post.comments.map {
-                CommentDTO(it.id, it.body, UserPostDTO(post.user.name,post.user.image))
+                CommentDTO(it.id, it.body, UserPostDTO(it.user.name,it.user.image))
             }.toMutableList()
             var userPost = UserPostDTO(post.user.name,post.user.image)
 
@@ -53,8 +53,7 @@ class PostController(private val instagramSystem : InstagramSystem) {
 
 
     fun commentPost(ctx: Context) {
-        val token = ctx.header("Authorization")
-        val userId = tokenJwt.validateToken(token!!)
+        val userId = getUserId(ctx)
         val postId = ctx.pathParam("id")
         val comment = ctx.body<DraftComment>()
 
