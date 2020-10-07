@@ -1,35 +1,11 @@
 package controller
 
+import dto.*
 import io.javalin.http.Context
-import javafx.animation.Timeline
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
-import org.unq.ui.model.UsedEmail
 import token.TokenController
 import java.time.LocalDateTime
-
-data class UserLoginDTO(val email: String, val password: String)
-data class UserRegisterDTO(val name:String,val email:String,val password: String,val image:String)
-data class PostUserDTO(val id: String,
-                       val description: String,
-                       val portrait: String,
-                       val landscape: String,
-                       val date: LocalDateTime,
-                       val likes: MutableList<UserPostDTO>,
-                       val user: UserPostDTO)
-
-data class UserGetDTO(val name:String,
-                      val image:String,
-                      val followers: MutableList<UserPostDTO>,
-                      val posts: MutableList<PostUserDTO>)
-
-data class UserDTO (
-    val name: String,
-    val image: String,
-    val followers: MutableList<UserPostDTO>,
-    val timeline : MutableList<PostUserDTO>
-
-)
 
 class UserController(private val instagramSystem : InstagramSystem){
 
@@ -107,7 +83,8 @@ class UserController(private val instagramSystem : InstagramSystem){
             val postsUser = posts.map {
                 val likes = it.likes.map {
                     UserPostDTO(it.name,it.image)}.toMutableList()
-                PostUserDTO(it.id,it.description,it.portrait,it.landscape,it.date,likes,userPost)}.toMutableList()
+                PostUserDTO(it.id,it.description,it.portrait,it.landscape,it.date,likes,userPost)
+            }.toMutableList()
 
             ctx.json(
                 UserGetDTO(user.name, user.image, followersUser, postsUser)
@@ -158,7 +135,7 @@ class UserController(private val instagramSystem : InstagramSystem){
 
             ctx.status(200)
             ctx.json(
-                    UserDTO(user.name, user.image, followersUser ,userTimeline)
+                    UserTimelineDTO(user.name, user.image, followersUser ,userTimeline)
             )
         } catch (e:NotFound){
             ctx.status(404).json(e.message!!)
