@@ -11,7 +11,6 @@ import token.TokenController
 data class UserLoginDTO(val email: String, val password: String)
 data class UserRegisterDTO(val name:String,val email:String,val password: String,val image:String)
 
-
 /* atributos originales de user
     id: kotlin.String,
     name: kotlin.String,
@@ -42,6 +41,11 @@ class UserController(private val instagramSystem : InstagramSystem){
         }
     }
 
+    fun validateName(name : String){
+        if(/*condicion*/) {
+            throw InvalidNameException("Your name : $name : contains numerals.")
+        }
+    }
 
     fun register(ctx: Context) {
         val userRegister = ctx.body<UserRegisterDTO>()
@@ -51,19 +55,9 @@ class UserController(private val instagramSystem : InstagramSystem){
             ctx.json(UserDTO(user))
         } catch (e: NotFound) { // MEJORAR
             throw BadRequestResponse()
+        } catch () {
+            throw
         }
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
