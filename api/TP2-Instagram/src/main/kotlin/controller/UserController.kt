@@ -25,6 +25,7 @@ class UserController(private val instagramSystem : InstagramSystem){
     private fun validateRegisterUser(ctx : Context) {
         val user = ctx.bodyValidator<UserRegisterDTO>()
             .check({ it.name.isNotEmpty()}, "Name cannot be empty" )
+            .check({it.email.isNotEmpty()}, "Email cannot be empty")
             .check({ "^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$"
                 .toRegex()
                 .matches(it.email) }, "Invalid email address")
