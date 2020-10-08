@@ -96,7 +96,7 @@ class UserController(private val instagramSystem : InstagramSystem){
         } catch (e: NotFound ) {
             ctx.status(404)
             ctx.json(
-                mapOf("result" to "Not found post with : $userId")
+                mapOf("result" to "Not found user with : $userId")
             )
         }
     }
