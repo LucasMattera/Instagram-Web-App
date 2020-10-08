@@ -122,9 +122,8 @@ class UserController(private val instagramSystem : InstagramSystem){
         }
     }
 
-    fun getUser (ctx: Context){
+    fun getUser(ctx: Context){
         val token = ctx.header("Authorization")
-        try {
             val userId = tokenJWT.validateToken(token!!)
             val user = instagramSystem.getUser(userId)
 
@@ -141,9 +140,6 @@ class UserController(private val instagramSystem : InstagramSystem){
             ctx.json(
                     UserTimelineDTO(user.name, user.image, followersUser ,userTimeline)
             )
-        } catch (e:NotFound){
-            ctx.status(404).json(e.message!!)
-        }
     }
 }
 
