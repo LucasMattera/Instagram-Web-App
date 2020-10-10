@@ -13,9 +13,10 @@ import org.uqbar.arena.windows.WindowOwner
 
 class EditPostWindow(owner: WindowOwner, model: DraftPostModel) : Dialog<DraftPostModel>(owner,model) {
 
-    fun textBox(panel: Panel, propiedad: String){
+    fun textBox(panel: Panel, propiedad: String, ancho: Int){
         TextBox(panel) with {
             bindTo(propiedad)
+            width = ancho
         }
     }
 
@@ -30,13 +31,13 @@ class EditPostWindow(owner: WindowOwner, model: DraftPostModel) : Dialog<DraftPo
         iconImage = "instagram.png"
 
         labelText(mainPanel,"Portrait")
-        textBox(mainPanel,"portrait")
+        textBox(mainPanel,"portrait",250)
 
         labelText(mainPanel,"Landscape")
-        textBox(mainPanel,"landscape")
+        textBox(mainPanel,"landscape", 250)
 
         labelText(mainPanel,"Description")
-        textBox(mainPanel,"description")
+        textBox(mainPanel,"description", 250)
 
         Button(mainPanel) with {
             text = "Accept"
