@@ -16,6 +16,7 @@ class UserModel(user : User,val system : InstagramSystem) {
     var description : String = ""
     var image : String = user.image
     var password : String = user.password
+    var passwordCheck: String = user.password
 
     fun filterByDescription(description : String) {
         this.posts = posts.filter { it.description.contains(description) }
@@ -39,6 +40,7 @@ class UserModel(user : User,val system : InstagramSystem) {
         system.editProfile(id,user.name,user.password,user.image)
         this.name = user.name
         this.password = user.password
+        this.passwordCheck = user.passwordCheck
         this.image = user.image
     }
 

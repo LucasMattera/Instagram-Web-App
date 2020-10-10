@@ -119,10 +119,10 @@ class UserWindow : SimpleWindow<UserModel> {
             text = "Edit Profile"
             onClick {
 
-                val user = EditUserModel(modelObject.name,modelObject.password,modelObject.image)
+                val user = EditUserModel(modelObject.name, modelObject.password, modelObject.passwordCheck, modelObject.image)
                 val view = EditUserWindow(thisWindow,user)
                 view.onAccept {
-                    if ( user.someUserFieldAreEmpty ()) {
+                    if ( user.someUserFieldsAreEmpty ()) {
                         throw UserException(" The field cannot be empty ")
                     } else {
                         modelObject.editUser(user)
