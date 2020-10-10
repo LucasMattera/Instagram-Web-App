@@ -51,8 +51,11 @@ class LoginWindow : SimpleWindow<LoginModel> {
             caption = "Login"
             onClick {
 
-                if ( modelObject.someLoginFieldAreEmpty ()) {
-                    throw UserException(" The field cannot be empty ")
+                if ( modelObject.feldPasswordEmpty()) {
+                    throw UserException(" The password field cannot be empty ")
+                }
+                if ( modelObject.fieldEmailIsEmpty()) {
+                    throw UserException(" The email field cannot be empty ")
                 }
                 try {
                     var user = modelObject.login(modelObject.email,modelObject.password)

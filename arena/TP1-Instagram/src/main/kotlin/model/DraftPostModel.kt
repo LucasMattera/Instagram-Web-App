@@ -15,8 +15,16 @@ class DraftPostModel() {
 
     }
 
-    fun somePostFieldAreEmpty() : Boolean {
-        return (portrait == "" || landscape == "" || description == "")
+    fun theFieldPortraitIsEmpty() : Boolean {
+        return (portrait == "" )
+    }
+
+    fun theFieldLandscapeIsEmpty() : Boolean {
+        return (landscape == "")
+    }
+
+    fun theFieldDescriptionIsEmpty() : Boolean {
+        return (description == "")
     }
 
 }

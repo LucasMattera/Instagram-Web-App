@@ -47,8 +47,14 @@ class UserWindow : SimpleWindow<UserModel> {
                 val post = DraftPostModel()
                 val view = EditPostWindow(thisWindow, post)
                 view.onAccept {
-                    if ( post.somePostFieldAreEmpty()) {
-                        throw UserException(" The field cannot be empty ")
+                    if (post.theFieldPortraitIsEmpty()) {
+                        throw UserException("The Portrait field cannot be empty")
+                    }
+                    if (post.theFieldLandscapeIsEmpty()) {
+                        throw UserException("The Landscape field cannot be empty")
+                    }
+                    if (post.theFieldDescriptionIsEmpty()) {
+                        throw UserException("The Description field cannot be empty")
                     }
                     modelObject.addPost(post)
                 }
@@ -66,8 +72,14 @@ class UserWindow : SimpleWindow<UserModel> {
                 val post = DraftPostModel(modelObject.selected!!)
                 val view = EditPostWindow(thisWindow, post)
                 view.onAccept {
-                    if (post.somePostFieldAreEmpty()) {
-                        throw UserException("The field cannot be empty")
+                    if (post.theFieldPortraitIsEmpty()) {
+                        throw UserException("The Portrait field cannot be empty")
+                    }
+                    if (post.theFieldLandscapeIsEmpty()) {
+                        throw UserException("The Landscape field cannot be empty")
+                    }
+                    if (post.theFieldDescriptionIsEmpty()) {
+                        throw UserException("The Description field cannot be empty")
                     }
                     modelObject.editPost(modelObject.selected!!.id, post)
                 }
@@ -122,9 +134,19 @@ class UserWindow : SimpleWindow<UserModel> {
                 val user = EditUserModel(modelObject.name, modelObject.password, modelObject.passwordCheck, modelObject.image)
                 val view = EditUserWindow(thisWindow,user)
                 view.onAccept {
-                    if ( user.someUserFieldsAreEmpty ()) {
-                        throw UserException(" The field cannot be empty ")
-                    } else {
+                    if ( user.nameIsEmpty()) {
+                        throw UserException(" The name field cannot be empty ")
+                    }
+                    if ( user.passwordIsEmpty()) {
+                        throw UserException(" The password field cannot be empty ")
+                    }
+                    if ( user.imageIsEmpty()) {
+                        throw UserException(" The image field cannot be empty ")
+                    }
+                    if ( user.passwordCheckIsEmpty()) {
+                        throw UserException(" The password check field cannot be empty ")
+                    }
+                    else {
                         modelObject.editUser(user)
                     }
                 }
