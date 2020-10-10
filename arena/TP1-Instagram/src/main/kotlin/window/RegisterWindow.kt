@@ -37,22 +37,28 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
             onClick {
 
                 if ( modelObject.fieldNameIsEmptyEmpty()) {
-                    throw UserException("The name field cannot by empty")
+                    throw UserException("The Name field cannot by empty")
                 }
                 if ( modelObject.fieldEmailIsEmptyEmpty()) {
-                    throw UserException("The email field cannot by empty")
+                    throw UserException("The Email field cannot by empty")
                 }
                 if ( modelObject.fieldIsImageEmptyEmpty()) {
-                    throw UserException("The image field cannot by empty")
+                    throw UserException("The Image field cannot by empty")
                 }
                 if ( modelObject.fieldPasswordChekIsEmptyEmpty()) {
-                    throw UserException("The password check field cannot by empty")
+                    throw UserException("The Password Check field cannot by empty")
                 }
                 if ( modelObject.fieldPasswordIsEmptyEmpty()) {
-                    throw UserException("The password field cannot by empty")
+                    throw UserException("The Password field cannot by empty")
                 }
                 if (!( modelObject.passwordAndPasswordCheckAreEqual())) {
                     throw UserException("Passwords do not match")
+                }
+                if (modelObject.notValidUserNameLenght()) {
+                    throw UserException("Username requires three characters at least")
+                }
+                if (!(modelObject.notValidEmail())) {
+                    throw UserException("Invalid Email adress")
                 }
                 try {
                     val user = modelObject.register(
