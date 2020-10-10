@@ -36,19 +36,19 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
 
             onClick {
 
-                if ( modelObject.fieldNameIsEmptyEmpty()) {
+                if ( modelObject.fieldNameIsEmpty()) {
                     throw UserException("The Name field cannot by empty")
                 }
-                if ( modelObject.fieldEmailIsEmptyEmpty()) {
+                if ( modelObject.fieldEmailIsEmpty()) {
                     throw UserException("The Email field cannot by empty")
                 }
-                if ( modelObject.fieldIsImageEmptyEmpty()) {
+                if ( modelObject.fieldIsImageEmpty()) {
                     throw UserException("The Image field cannot by empty")
                 }
-                if ( modelObject.fieldPasswordChekIsEmptyEmpty()) {
+                if ( modelObject.fieldPasswordCheckIsEmpty()) {
                     throw UserException("The Password Check field cannot by empty")
                 }
-                if ( modelObject.fieldPasswordIsEmptyEmpty()) {
+                if ( modelObject.fieldPasswordIsEmpty()) {
                     throw UserException("The Password field cannot by empty")
                 }
                 if (!( modelObject.passwordAndPasswordCheckAreEqual())) {

@@ -36,19 +36,19 @@ class RegisterModel(val system: InstagramSystem) {
         return name.length < 3
     }
 
-    fun fieldNameIsEmptyEmpty() : Boolean{
+    fun fieldNameIsEmpty() : Boolean{
         return name == ""
     }
-    fun fieldEmailIsEmptyEmpty() : Boolean{
+    fun fieldEmailIsEmpty() : Boolean{
         return email == ""
     }
-    fun fieldPasswordIsEmptyEmpty() : Boolean{
+    fun fieldPasswordIsEmpty() : Boolean{
         return password == ""
     }
-    fun fieldIsImageEmptyEmpty() : Boolean{
+    fun fieldIsImageEmpty() : Boolean{
         return image == ""
     }
-    fun fieldPasswordChekIsEmptyEmpty() : Boolean{
+    fun fieldPasswordCheckIsEmpty() : Boolean{
         return passwordCheck == ""
     }
 
