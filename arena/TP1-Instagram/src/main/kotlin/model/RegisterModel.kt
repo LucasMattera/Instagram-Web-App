@@ -6,7 +6,7 @@ import org.uqbar.commons.model.annotations.Observable
 import java.util.regex.Pattern
 
 @Observable
-class RegisterModel(val system: InstagramSystem) {
+class RegisterModel(val system: InstagramSystem): ParameterIsEmpty {
     var name : String = ""
     var email : String = ""
     var password : String = ""
@@ -35,21 +35,4 @@ class RegisterModel(val system: InstagramSystem) {
     fun notValidUserNameLenght(): Boolean {
         return name.length < 3
     }
-
-    fun fieldNameIsEmptyEmpty() : Boolean{
-        return name == ""
-    }
-    fun fieldEmailIsEmptyEmpty() : Boolean{
-        return email == ""
-    }
-    fun fieldPasswordIsEmptyEmpty() : Boolean{
-        return password == ""
-    }
-    fun fieldIsImageEmptyEmpty() : Boolean{
-        return image == ""
-    }
-    fun fieldPasswordChekIsEmptyEmpty() : Boolean{
-        return passwordCheck == ""
-    }
-
 }

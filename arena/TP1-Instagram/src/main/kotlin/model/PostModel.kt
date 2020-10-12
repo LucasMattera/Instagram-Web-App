@@ -6,6 +6,4 @@ import org.uqbar.commons.model.annotations.Observable
 class PostModel(var id :String,
                 var description : String,
                 var landscape : String,
-                var portrait : String) {
-
-}
+                var portrait : String)

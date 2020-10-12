@@ -51,10 +51,10 @@ class LoginWindow : SimpleWindow<LoginModel> {
             caption = "Login"
             onClick {
 
-                if ( modelObject.feldPasswordEmpty()) {
+                if ( modelObject.parameterIsEmpty(modelObject.password)) {
                     throw UserException(" The password field cannot be empty ")
                 }
-                if ( modelObject.fieldEmailIsEmpty()) {
+                if ( modelObject.parameterIsEmpty(modelObject.email)) {
                     throw UserException(" The email field cannot be empty ")
                 }
                 try {
@@ -77,7 +77,6 @@ class LoginWindow : SimpleWindow<LoginModel> {
                 val model = RegisterModel(modelObject.system)
                 RegisterWindow(thisWindow, model).open()
             }
-
         }
     }
 }
