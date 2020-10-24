@@ -16,6 +16,12 @@ class PostController(private val instagramSystem : InstagramSystem) {
         return ctx.attribute<String>("userId") ?: throw BadRequestResponse("Not found user")
     }
 
+    private fun validateComment(ctx : Context) {
+        val comment = ctx.bodyValidator<DraftComment>()
+        .check({it.body.isNotEmpty()}, "Comment cannot be empty")
+        .get()
+    }
+
     fun getPostById(ctx: Context) {
         val postId = ctx.pathParam("id")
         try {
@@ -56,6 +62,7 @@ class PostController(private val instagramSystem : InstagramSystem) {
         val userId = getUserId(ctx)
         val postId = ctx.pathParam("id")
         val comment = ctx.body<DraftComment>()
+        validateComment(ctx) ;
 
         try {
             instagramSystem.addComment(postId, userId, comment)
