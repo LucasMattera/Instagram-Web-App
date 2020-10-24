@@ -35,7 +35,7 @@ class UserController(private val instagramSystem : InstagramSystem){
     }
 
 
-    
+
     fun login(ctx: Context) {
         val userLogin = ctx.body<UserLoginDTO>()
         try {
@@ -107,18 +107,24 @@ class UserController(private val instagramSystem : InstagramSystem){
         val token = ctx.header("Authorization")
         val toUserId = tokenJWT.validateToken(token!!)
         val fromUser = ctx.pathParam("id")
-        try {
-            instagramSystem.updateFollower(fromUser,toUserId)
-            ctx.status(200)
-            ctx.json(
-                mapOf(
-                    "result" to "ok"
+        if ( toUserId != fromUser) {
+            try {
+                instagramSystem.updateFollower(fromUser,toUserId)
+                ctx.status(200)
+                ctx.json(
+                    mapOf(
+                        "result" to "ok"
+                    )
                 )
-            )
-        } catch (e: NotFound) {
-        ctx.status(404)
-        ctx.json(
-            mapOf("result" to "Not found user with : $fromUser")
+            } catch (e: NotFound) {
+            ctx.status(404)
+            ctx.json(
+                mapOf("result" to "Not found user with : $fromUser")
+                )
+            }
+        }else {
+            ctx.json(
+                    mapOf("result" to "Both ID are equals")
             )
         }
     }
@@ -139,7 +145,7 @@ class UserController(private val instagramSystem : InstagramSystem){
 
             ctx.status(200)
             ctx.json(
-                    UserTimelineDTO(user.name, user.image, followersUser ,userTimeline)
+                    UserTimelineDTO(userId,user.name, user.image, followersUser ,userTimeline)
             )
     }
 }
