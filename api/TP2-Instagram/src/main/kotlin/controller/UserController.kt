@@ -10,6 +10,7 @@ import java.time.LocalDateTime
 
 class UserController(private val instagramSystem : InstagramSystem){
 
+<<<<<<< HEAD
     val tokenJWT = TokenController()
 
     private fun validateLoginUser(ctx : Context) {
@@ -21,6 +22,16 @@ class UserController(private val instagramSystem : InstagramSystem){
             .check({it.password.isNotEmpty()}, "Password cannot by empty")
             .get()
     }
+=======
+/* atributos originales de user
+    id: kotlin.String,
+    name: kotlin.String,
+    email: kotlin.String,
+    password: kotlin.String,
+    image: kotlin.String,
+    followers: kotlin.collections.MutableList<org.unq.ui.model.User>
+ */
+>>>>>>> origin/lucas
 
     private fun validateRegisterUser(ctx : Context) {
         val user = ctx.bodyValidator<UserRegisterDTO>()
@@ -55,12 +66,18 @@ class UserController(private val instagramSystem : InstagramSystem){
         }
     }
 
+    fun validateName(name : String){
+        if(/*condicion*/) {
+            throw InvalidNameException("Your name : $name : contains numerals.")
+        }
+    }
 
     fun register(ctx: Context) {
         val userRegister = ctx.body<UserRegisterDTO>()
         try {
             validateRegisterUser(ctx)
             val user = instagramSystem.register(userRegister.name, userRegister.email, userRegister.password, userRegister.image)
+<<<<<<< HEAD
             ctx.header("Authorization", tokenJWT.generateToken(user))
             ctx.status(201)
             ctx.json(
@@ -163,3 +180,15 @@ class UserController(private val instagramSystem : InstagramSystem){
 
 
 
+=======
+            ctx.header("Authorization", token.generateToken(user))
+            ctx.json(UserDTO(user))
+        } catch (e: NotFound) { // MEJORAR
+            throw BadRequestResponse()
+        } catch () {
+            throw
+        }
+    }
+
+}
+>>>>>>> origin/lucas
