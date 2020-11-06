@@ -26,7 +26,7 @@ const Login = () => {
             .then((response) => {
                 localStorage.setItem("token", response.headers.authorization);
                 localStorage.setItem("userData", JSON.stringify(response.data));
-                history.push("/home");
+                history.push("/");
           })
           .catch((error) => console.log("Error: ", error));
       };
@@ -56,15 +56,14 @@ const Login = () => {
                                     <input className="form-control" type="password" name="password" value={data.password} onChange={handleInputChange} placeholder="Password" required />
                                 </div>
                                 <div className="button">
-                                    <button type="buttonLogin" class="btn btn-primary btn-lg btn-block">Iniciar sesion</button>
+                                    <button type="submit" className="btn btn-primary btn-lg btn-block">Iniciar sesion</button>
                                 </div>
                             </div>
                         </form>
                             <div id="register">
                                 <h6>¿ No tienes cuenta ?</h6>
-                                <button type="buttonRegister" class="btn btn-link">Registrate</button>
-                            </div> 
-                           
+                                <button type="submit" className="btn btn-link">Registrate</button>
+                            </div>               
                 </div>
             </div>
         </div>

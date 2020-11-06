@@ -21,6 +21,11 @@ class InstagramApi {
             it.defaultContentType = "application/json"
             it.registerPlugin(RouteOverviewPlugin("/routes"))
             it.accessManager(InstagramAccessManager(instagramSystem))
+            it.enableCorsForAllOrigins()
+        }
+
+        app.before {
+            it.header("Access-Control-Expose-Headers","*")
         }
 
         app.start(7000)
