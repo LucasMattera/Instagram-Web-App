@@ -10,7 +10,6 @@ import java.time.LocalDateTime
 
 class UserController(private val instagramSystem : InstagramSystem){
 
-<<<<<<< HEAD
     val tokenJWT = TokenController()
 
     private fun validateLoginUser(ctx : Context) {
@@ -22,16 +21,6 @@ class UserController(private val instagramSystem : InstagramSystem){
             .check({it.password.isNotEmpty()}, "Password cannot by empty")
             .get()
     }
-=======
-/* atributos originales de user
-    id: kotlin.String,
-    name: kotlin.String,
-    email: kotlin.String,
-    password: kotlin.String,
-    image: kotlin.String,
-    followers: kotlin.collections.MutableList<org.unq.ui.model.User>
- */
->>>>>>> origin/lucas
 
     private fun validateRegisterUser(ctx : Context) {
         val user = ctx.bodyValidator<UserRegisterDTO>()
