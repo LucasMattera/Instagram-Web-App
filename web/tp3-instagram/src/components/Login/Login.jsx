@@ -23,20 +23,23 @@ const Login = () => {
                 <div id="columnaDerecha" className="col-md-3 text-center">            
                     <img src={logoig} className="fontIg"/>
                         <form>
-                            <div className="form-group" >
-                                <input class="form-control" type="text" name="email" placeholder="Email" required />
+                            <div id="login">
+                                <div className="form-group" >
+                                    <input class="form-control" type="text" name="email" placeholder="Email" required />
+                                </div>
+                                <div className="form-group" >
+                                    <input class="form-control" type="password" name="password" placeholder="Password" required />
+                                </div>
+                                <div className="button">
+                                    <button type="buttonLogin" class="btn btn-primary btn-lg btn-block">Iniciar sesion</button>
+                                </div>
                             </div>
-                            <div className="form-group" >
-                                <input class="form-control" type="password" name="password" placeholder="Password" required />
-                            </div>
-                            <div className="button">
-                                <button type="buttonLogin" class="btn btn-primary btn-lg btn-block">Iniciar sesion</button>
-                            </div>
+                        </form>
                             <div id="register">
-                            <h6>No tienes cuenta ?</h6>
+                                <h6>¿ No tienes cuenta ?</h6>
                                 <button type="buttonRegister" class="btn btn-link">Registrate</button>
                             </div> 
-                        </form>   
+                           
                 </div>
             </div>
         </div>

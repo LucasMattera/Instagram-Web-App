@@ -6,20 +6,26 @@
     background-color: #eee;
 }
 
-form,.button, #register, h6 {
+form,.button, #register, h6, #login {
     background: white;
 }
 
-h6 {
-    margin-top: 20px;
+
+.form-control {
+    background-color: #eee;
 }
-#columnaDerecha {
+
+h6 {
+    margin-top: 30px;
+}
+#columnaDerecha{
     margin-top: 7% ;
     margin-left: 23%;
     background: white;
     padding: 40px;
     
 }
+
 
 .button {
     width: 100%;
