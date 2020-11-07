@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Notifications, {notify} from 'react-notify-toast';
 import '../../styles/Login.css';
 import logo from '../../images/fotoInstagram.png';
 import logoig from '../../images/instagram-new-logo.png' ;
@@ -19,6 +20,10 @@ const Login = () => {
         });
       };
 
+    const goRegister = () => {
+        history.push("/register") ;
+    }
+
     
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -28,7 +33,9 @@ const Login = () => {
                 localStorage.setItem("userData", JSON.stringify(response.data));
                 history.push("/");
           })
-          .catch((error) => console.log("Error: ", error));
+          .catch(error => {
+            console.log("login error", error.response);  //No funciona    
+        });
       };
 
 
@@ -60,10 +67,12 @@ const Login = () => {
                                 </div>
                             </div>
                         </form>
+                        <form onSubmit={goRegister}>
                             <div id="register">
                                 <h6>¿ No tienes cuenta ?</h6>
                                 <button type="submit" className="btn btn-link">Registrate</button>
-                            </div>               
+                            </div>
+                        </form>               
                 </div>
             </div>
         </div>
