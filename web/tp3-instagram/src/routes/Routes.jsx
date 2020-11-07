@@ -7,9 +7,6 @@ import PrivateRoute from './PrivateRoute'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  BrowserRouter
 } from "react-router-dom";
 
 export default function Routes() {
