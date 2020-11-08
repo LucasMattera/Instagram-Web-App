@@ -26,17 +26,6 @@ const Login = () => {
         history.push("/register") ;
     }
 
-    /*const getUser = () => {
-        axios.get("http://localhost:7000/user")
-            .then(response =>{
-                localStorage.setItem("userData", JSON.stringify(response.data));
-                //localStorage.setItem('userData', success.data);
-            }).catch(error => {
-                console.log("error get user", error.response);
-        });
-    }
-    */
-
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post("http://localhost:7000/login", data)

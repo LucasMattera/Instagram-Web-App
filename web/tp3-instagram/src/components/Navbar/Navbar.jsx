@@ -18,7 +18,7 @@ const Navbar = () => {
     return (
         <div>
             <nav className="navbar navbar-light bg-light justify-content-between">
-                <a className="navbar-brand" href="/home">Instagram</a>
+                <a className="navbar-brand" href="/">Instagram</a>
                 <form className="form-inline">
                 <input className="form-control search" type="search" placeholder="Buscar..." aria-label="Search" />
                 </form>

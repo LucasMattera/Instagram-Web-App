@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from '../Navbar/Navbar'
+import Post from '../Post/Post';
 import axios from "axios";
 
 const Home = () => {
@@ -21,8 +22,16 @@ const Home = () => {
     return (
         <div className="home">
             <Navbar />
+            
         </div>
     )
 }
 
+/*
+<div className="contenedor-posts">
+                    {timeline.map(post => (
+                    <Post key={post.id} post={post}/>
+                    ))}
+                </div>
+                */
 export default Home ;
