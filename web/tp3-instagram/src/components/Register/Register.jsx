@@ -9,7 +9,6 @@ const Register = () => {
         username: "",
         email: "",
         password: "",
-        passwordCheck: ""
     });
 
     let myColor = { background: '#0E1717', text: "#FFFFFF" };
@@ -38,14 +37,42 @@ const Register = () => {
     };
  
     return (
-        <div className="input">
-            <input type="text" id="username" name="username" placeholder="Username" required/>
-            <input type="text" id="email" name="email" placeholder="Email" required/>
-            <input type="text" id="password" name="password" placeholder="Password" required/>
-            <input type="text" id="passwordCheck" name="passwordCheck" placeholder="Password Check" required/>
-            <button type="button">Register</button>
-            <button type="button">Cancel</button>
+        <div className="container-fluid">
+            <Notifications />
+            <div className="row">
+                <div id="columnaIzquierda" className="col-md-6">
+                    <div id="fotoInstagram">
+                        <div className="foto">
+                        <img className="celu"/>
+                        </div> 
+                    </div>
+                </div>
+                
+                <div id="columnaDerecha" className="col-md-3 text-center">            
+                    <img className="fontIg"/>
+                        <form onSubmit={handleSubmit}>
+                            <div id="register">
+                                <div className="form-group" >
+                                    <input className="form-control" type="text" name="username" value={data.name} onChange={handleInputChange} placeholder="Name" required />
+                                </div>
+                                <div className="form-group" >
+                                    <input className="form-control" type="email" name="email" value={data.email} onChange={handleInputChange} placeholder="Email" required />
+                                </div>
+                                <div className="form-group" >
+                                    <input className="form-control" type="password" name="password" value={data.password} onChange={handleInputChange} placeholder="Password" required />
+                                </div>
+                                <div className="button">
+                                    <button type="submit" className="btn btn-primary btn-lg btn-block">Registrarse</button>
+                                </div>
+                                <div className="button">
+                                    <button type="submit" className="btn btn-primary btn-lg btn-block">Cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                </div>
+            </div>
         </div>
+                            
     )
 }
 
