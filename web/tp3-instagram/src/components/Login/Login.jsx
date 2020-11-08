@@ -26,21 +26,31 @@ const Login = () => {
         history.push("/register") ;
     }
 
-    
+    /*const getUser = () => {
+        axios.get("http://localhost:7000/user")
+            .then(response =>{
+                localStorage.setItem("userData", JSON.stringify(response.data));
+                //localStorage.setItem('userData', success.data);
+            }).catch(error => {
+                console.log("error get user", error.response);
+        });
+    }
+    */
+
     const handleSubmit = (event) => {
         event.preventDefault();
         axios.post("http://localhost:7000/login", data)
-            .then((response) => {
+            .then((response) => {    
                 localStorage.setItem("token", response.headers.authorization);
-                localStorage.setItem("userData", JSON.stringify(response.data));
-                history.push("/");
+                axios.defaults.headers['authorization'] = localStorage.getItem('token')
+                history.push("/");       
           })
             .catch(error => {
                 console.log("error : ", error.response.data.message);
                 const errorUser = error.response.data.message ;
-                notify.show(errorUser,"error",5000,myColor);
-                
+                notify.show(errorUser,"error",5000,myColor);          
         });
+        
       };
 
 
@@ -74,7 +84,7 @@ const Login = () => {
                         </form>
                         <form onSubmit={goRegister}>
                             <div id="register">
-                                <h6>¿ No tienes cuenta ?</h6>
+                                <h6>¿ No tenes cuenta ?</h6>
                                 <button type="submit" className="btn btn-link">Registrate</button>
                             </div>
                         </form>               
