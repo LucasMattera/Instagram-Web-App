@@ -60,6 +60,7 @@ const Register = () => {
                 <div id="columnaDerecha" className="col-md-3 text-center">            
                     <img src={logoig} className="fontIg"/>
                         <form onSubmit={handleSubmit}>
+                            <h2>Regístrate para ver fotos y videos de tus amigos.</h2>
                             <div id="login">
                                 <div className="form-group" >
                                     <input className="form-control" type="text" name="name" value={data.name} onChange={handleInputChange} placeholder="Name" required />
