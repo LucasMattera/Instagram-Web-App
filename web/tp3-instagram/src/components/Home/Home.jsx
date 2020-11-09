@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Navbar from '../Navbar/Navbar'
-import Post from '../Post/Post';
 import axios from "axios";
 
 const Home = () => {
@@ -23,17 +22,17 @@ const Home = () => {
         <div className="home">
             <Navbar />
             <div className="contenedor-posts">
-                    {timeline.map(post => (
+                    {timeline.map(post =>  (
                         <div className="container">
                             <div className="posts">
                                 <div className="imageUserPost">
-                                    <p>{post.user.image}</p>
+                                   <img src={post.user.image}/>
                                 </div>
                                 <div className="nameUserPost">
                                     <p>{post.user.name}</p>
                                 </div>
                                 <div className="imageUserPost">
-                                    <p>{post.landscape}</p>
+                                    <img src={post.landscape}/>
                                 </div>
                                 <div className="likeUserPost">
                                     <p>{post.likes.length}</p>
