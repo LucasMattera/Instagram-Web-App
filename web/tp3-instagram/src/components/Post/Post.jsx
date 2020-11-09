@@ -2,18 +2,27 @@ import React from 'react' ;
 
 const Post = ({post}) => {
     
-    const {id, user, portrait, likes, description} = post;
-    return(
+
+   /* return (
         <div className="container">
-            
-            <div className="post">
-                <p className="text-post">{post.user}</p>
-                <p className="text-post">{post.portrait}</p>
-                <p className="text-post">{post.likes}</p>
-                <p className="text-post">{post.description}</p>
+            <div className="posts">
+                <div className="nameUserPost">
+                    <p>{post.user.name}</p>
+                </div>
+                <div className="imageUserPost">
+                    <p>{post.landscape}</p>
+                </div>
+                <div className="likeUserPost">
+                    <p>{post.likes}</p>
+                </div>
+                <div className="descpUserPost">
+                    <p>{post.description}</p>
+                </div>
             </div>
         </div>
     )
+    */
+
 }
 
 export default Post ;

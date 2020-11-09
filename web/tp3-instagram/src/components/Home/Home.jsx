@@ -22,15 +22,16 @@ const Home = () => {
     return (
         <div className="home">
             <Navbar />
-            <div className="container">
-                <div className="contenedor-post">
-                    {timeline.map(post => (
-                        <Post key={post.id} post={post}/>
-                    ))}
-                </div>
-            </div>
+            
         </div>
-   )
+    )
 }
 
+/*
+<div className="contenedor-posts">
+                    {timeline.map(post => (
+                    <Post key={post.id} post={post}/>
+                    ))}
+                </div>
+                */
 export default Home ;
