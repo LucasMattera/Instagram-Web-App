@@ -3,7 +3,7 @@ package model
 import org.uqbar.commons.model.annotations.Observable
 
 @Observable
-class DraftPostModel() {
+class DraftPostModel(): ParameterIsEmpty {
     var portrait = ""
     var landscape = ""
     var description = ""
@@ -14,9 +14,4 @@ class DraftPostModel() {
         description = postModel.description
 
     }
-
-    fun somePostFieldAreEmpty() : Boolean {
-        return (portrait == "" || landscape == "" || description == "")
-    }
-
 }

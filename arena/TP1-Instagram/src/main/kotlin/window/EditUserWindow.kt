@@ -2,12 +2,10 @@ package window
 
 import model.EditUserModel
 import org.uqbar.arena.kotlin.extensions.*
-import org.uqbar.arena.widgets.Button
-import org.uqbar.arena.widgets.Label
-import org.uqbar.arena.widgets.Panel
-import org.uqbar.arena.widgets.TextBox
+import org.uqbar.arena.widgets.*
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.commons.model.exceptions.UserException
 
 class EditUserWindow(owner: WindowOwner, model: EditUserModel) : Dialog<EditUserModel>(owner,model) {
 
@@ -23,6 +21,12 @@ class EditUserWindow(owner: WindowOwner, model: EditUserModel) : Dialog<EditUser
         }
     }
 
+    fun passwordField(panel: Panel, propiedad : String){
+        PasswordField(panel) with {
+            bindTo(propertyName = propiedad)
+        }
+    }
+
     override fun createFormPanel(mainPanel: Panel) {
         title = "Edit Profile"
         iconImage = "instagram.png"
@@ -31,7 +35,10 @@ class EditUserWindow(owner: WindowOwner, model: EditUserModel) : Dialog<EditUser
         textBox(mainPanel,"name")
 
         labelText(mainPanel,"Password")
-        textBox(mainPanel,"password")
+        passwordField(mainPanel,"password")
+
+        labelText(mainPanel,"Password confirmation")
+        passwordField(mainPanel,"passwordCheck")
 
         labelText(mainPanel,"Image")
         textBox(mainPanel,"image")
@@ -39,6 +46,9 @@ class EditUserWindow(owner: WindowOwner, model: EditUserModel) : Dialog<EditUser
         Button(mainPanel) with {
             text = "Accept"
             onClick {
+                if ( modelObject.passwordsDontMatch()) {
+                    throw UserException("Passwords do not match")
+                }
                 accept()
             }
         }

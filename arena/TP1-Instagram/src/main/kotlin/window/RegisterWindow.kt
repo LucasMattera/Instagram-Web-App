@@ -1,5 +1,6 @@
 package window
 
+import LoginModel
 import model.RegisterModel
 import model.UserModel
 import org.unq.ui.model.UsedEmail
@@ -30,18 +31,23 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
         }
     }
 
+    fun userFieldCheck(modelObject: RegisterModel) {
+        if ( modelObject.parameterIsEmpty(modelObject.name)) throw UserException("The Name field cannot by empty")
+        if ( modelObject.parameterIsEmpty(modelObject.email)) throw UserException("The Email field cannot by empty")
+        if ( modelObject.parameterIsEmpty(modelObject.image)) throw UserException("The Image field cannot by empty")
+        if ( modelObject.parameterIsEmpty(modelObject.passwordCheck)) throw UserException("The Password Check field cannot by empty")
+        if ( modelObject.parameterIsEmpty(modelObject.password)) throw UserException("The Password field cannot by empty")
+        if (!(modelObject.passwordAndPasswordCheckAreEqual())) throw UserException("Passwords do not match")
+        if (modelObject.notValidUserNameLenght()) throw UserException("Username requires three characters at least")
+        if (!(modelObject.notValidEmail())) throw UserException("Invalid Email adress")
+    }
+
     override fun addActions(actionPanel: Panel) {
         Button(actionPanel) with {
             text = "Register"
 
             onClick {
-
-                if ( modelObject.someRegisterFieldAreEmpty()) {
-                    throw UserException("This field cannot by empty")
-                }
-                if (!( modelObject.passwordAndPasswordCheckAreEqual())) {
-                    throw UserException("Passwords do not match")
-                }
+                userFieldCheck(modelObject)
                 try {
                     val user = modelObject.register(
                         modelObject.name,
@@ -50,11 +56,11 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
                         modelObject.image,
                     )
                     val usermodel = UserModel(user, modelObject.system)
-                    thisWindow.close() ; UserWindow(thisWindow, usermodel).open()
+                    thisWindow.close()
+                    UserWindow(thisWindow, usermodel).open()
                 } catch ( e : UsedEmail ) {
                     throw UserException(e.message)
                 }
-
             }
         }
 
@@ -64,8 +70,6 @@ class RegisterWindow(owner: WindowOwner, model: RegisterModel) : Dialog<Register
                 cancel()
             }
         }
-
-
     }
 
     override fun createFormPanel(mainPanel: Panel) {

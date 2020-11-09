@@ -1,63 +1,157 @@
 package controller
 
-import io.javalin.http.BadRequestResponse
+import dto.*
 import io.javalin.http.Context
 import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
-import org.unq.ui.model.User
 import token.TokenController
+import java.time.LocalDateTime
 
-data class UserLoginDTO(val email: String, val password: String)
-data class UserRegisterDTO(val name:String,val email:String,val password: String,val image:String)
+class UserController(private val instagramSystem : InstagramSystem) {
 
-/* atributos originales de user
-    id: kotlin.String,
-    name: kotlin.String,
-    email: kotlin.String,
-    password: kotlin.String,
-    image: kotlin.String,
-    followers: kotlin.collections.MutableList<org.unq.ui.model.User>
- */
+    val tokenJWT = TokenController()
 
-class UserDTO(user : User) {
-    val id = user.id
-    val name = user.name
-    val email = user.email
-}
-
-class UserController(private val instagramSystem : InstagramSystem){
-
-    val token = TokenController()
-
-    fun login(ctx: Context) {
-        val userLogin = ctx.body<UserLoginDTO>()  //aca se matchea el dataclass con el json que se escribe en postman
-        try {
-            val user = instagramSystem.login(userLogin.email, userLogin.password)
-            ctx.header("Authorization", token.generateToken(user))
-            ctx.json(UserDTO(user))
-        } catch(e: NotFound){
-            throw BadRequestResponse()
-        }
+    private fun validateLoginUser(ctx: Context) {
+        val user = ctx.bodyValidator<UserLoginDTO>()
+                .check({ it.email.isNotEmpty() }, "Email cannot be empty")
+                .check({
+                    "^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$"
+                            .toRegex()
+                            .matches(it.email)
+                }, "Invalid email address")
+                .check({ it.password.isNotEmpty() }, "Password cannot by empty")
+                .get()
     }
 
-    fun validateName(name : String){
-        if(/*condicion*/) {
-            throw InvalidNameException("Your name : $name : contains numerals.")
+    private fun validateRegisterUser(ctx: Context) {
+        val user = ctx.bodyValidator<UserRegisterDTO>()
+                .check({ it.name.isNotEmpty() }, "Name cannot be empty")
+                .check({ it.email.isNotEmpty() }, "Email cannot be empty")
+                .check({
+                    "^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$"
+                            .toRegex()
+                            .matches(it.email)
+                }, "Invalid email address")
+                .check({ it.password.isNotEmpty() }, "Password cannot be empty")
+                .check({ it.image.isNotEmpty() }, "Image cannot be empty")
+                .get()
+    }
+
+
+    fun login(ctx: Context) {
+        val userLogin = ctx.body<UserLoginDTO>()
+        try {
+            validateLoginUser(ctx)
+            val user = instagramSystem.login(userLogin.email, userLogin.password)
+            ctx.header("Authorization", tokenJWT.generateToken(user))
+            ctx.status(200)
+            ctx.json(
+                    mapOf("result" to "ok")
+            )
+        } catch (e: NotFound) {
+            ctx.status(404)
+            ctx.json(
+                    mapOf("result" to "error",
+                            "message" to e.message)
+            )
         }
     }
 
     fun register(ctx: Context) {
         val userRegister = ctx.body<UserRegisterDTO>()
         try {
+            validateRegisterUser(ctx)
             val user = instagramSystem.register(userRegister.name, userRegister.email, userRegister.password, userRegister.image)
-            ctx.header("Authorization", token.generateToken(user))
-            ctx.json(UserDTO(user))
-        } catch (e: NotFound) { // MEJORAR
-            throw BadRequestResponse()
-        } catch () {
-            throw
+            ctx.header("Authorization", tokenJWT.generateToken(user))
+            ctx.status(201)
+            ctx.json(
+                    mapOf("result" to "ok")
+            )
+        } catch (e: UsedEmail) {
+            ctx.status(404)
+            ctx.json(
+                    mapOf("result" to "error",
+                            "message" to e.message)
+            )
         }
     }
 
+
+    fun getUserById(ctx: Context) {
+        val userId = ctx.pathParam("id")
+        try {
+            val user = instagramSystem.getUser(userId)
+            val posts = instagramSystem.searchByUserId(userId)
+            var userPost = UserPostDTO(user.name, user.image)
+
+            val followersUser = user.followers.map {
+                UserPostDTO(it.name, it.image)
+            }.toMutableList()
+            val postsUser = posts.map {
+                val likes = it.likes.map {
+                    UserPostDTO(it.name, it.image)
+                }.toMutableList()
+                PostUserDTO(it.id, it.description, it.portrait, it.landscape, it.date, likes, userPost)
+            }.toMutableList()
+
+            ctx.json(
+                    UserGetDTO(user.name, user.image, followersUser, postsUser)
+            )
+        } catch (e: NotFound) {
+            ctx.status(404)
+            ctx.json(
+                    mapOf("result" to "Not found user with : $userId")
+            )
+        }
+    }
+
+
+    fun followerUser(ctx: Context) {
+        val token = ctx.header("Authorization")
+        val toUserId = tokenJWT.validateToken(token!!)
+        val fromUser = ctx.pathParam("id")
+        if (toUserId != fromUser) {
+            try {
+                instagramSystem.updateFollower(fromUser, toUserId)
+                ctx.status(200)
+                ctx.json(
+                        mapOf(
+                                "result" to "ok"
+                        )
+                )
+            } catch (e: NotFound) {
+                ctx.status(404)
+                ctx.json(
+                        mapOf("result" to "Not found user with : $fromUser")
+                )
+            }
+        } else {
+            ctx.json(
+                    mapOf("result" to "Both ID are equals")
+            )
+        }
+    }
+
+    fun getUser(ctx: Context) {
+        val token = ctx.header("Authorization")
+        val userId = tokenJWT.validateToken(token!!)
+        val user = instagramSystem.getUser(userId)
+
+        var userPost = UserPostDTO(user.name, user.image)
+        val userTimeline = instagramSystem.timeline(userId).map {
+            val likes = it.likes.map {
+                UserPostDTO(it.name, it.image)
+            }.toMutableList()
+            PostUserDTO(it.id, it.description, it.portrait, it.landscape, it.date, likes, userPost)
+        }.toMutableList()
+        val followersUser = user.followers.map {
+            UserPostDTO(it.name, it.image)
+        }.toMutableList()
+
+        ctx.status(200)
+        ctx.json(
+                UserTimelineDTO(userId, user.name, user.image, followersUser, userTimeline)
+        )
+    }
 }
