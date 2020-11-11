@@ -21,9 +21,7 @@ const Home = () => {
                 console.log(error)
             )            
     }, []
-    );
-       
-    console.log(user)
+    );      
 
     return(
         <div className="home">
@@ -33,7 +31,7 @@ const Home = () => {
                     <div className="posts-izquierda col-md-3 col-sm-12">
                     </div>
                     <div className="posts-medio col-md-5 col-sm-12">
-                        {user.timeline.map(post =>  (
+                        {user.timeline.map(post => (
                             <div className="post">
                                 <div className="imagePost">
                                     <img className="imagePost" src={post.user.image}/>

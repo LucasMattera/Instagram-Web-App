@@ -15,10 +15,16 @@ const Navbar = () => {
         history.push("/profile") ;
     }
 
+    const goHome = () => {
+        history.push("/home") ;
+    }
+
+
+
     return (
         <div>
             <nav className="navbar navbar-light bg-light justify-content-between">
-                <a className="navbar-brand" href="/">Instagram</a>
+                <a type="submit" className="navbar-brand" onClick={goHome}>Instagram</a>
                 <form className="form-inline">
                 <input className="form-control search" type="search" placeholder="Buscar..." aria-label="Search" />
                 </form>
