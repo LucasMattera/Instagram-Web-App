@@ -7,10 +7,12 @@
    
 }
 
-.imagePost, .nameUserPost {
+.imagePost, .nameUserPost{
     display: inline-block;
     margin-bottom: 2%;
+    
 }
+
 
 .nameUserPost {
     border-radius: 1% solid;

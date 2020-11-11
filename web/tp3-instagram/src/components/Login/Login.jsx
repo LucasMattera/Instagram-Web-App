@@ -31,7 +31,6 @@ const Login = () => {
         axios.post("http://localhost:7000/login", data)
             .then((response) => {    
                 localStorage.setItem("token", response.headers.authorization);
-                axios.defaults.headers['authorization'] = localStorage.getItem('token')
                 history.push("/home");       
           })
             .catch(error => {

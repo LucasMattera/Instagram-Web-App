@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Navbar from '../Navbar/Navbar'
 import axios from "axios";
 import '../../styles/Home.css';
+import Like from '../Like/Like'
 
 const Home = () => {
     const [user,setUser] = useState({
@@ -23,8 +24,7 @@ const Home = () => {
             )            
     }, []
     ); 
-    
-    console.log(user)
+
 
     return(
         <div className="home">
@@ -45,6 +45,9 @@ const Home = () => {
                                 <div className="imageUserPost">
                                     <img className="imageUserPost" src={post.portrait}/>
                                 </div>
+                                <form onSubmit={Like}>
+                                    <button type="submit" className="btn btn-link">Mg</button>
+                                </form>
                                 <div className="likeUserPost">
                                     <p>{post.likes.length} Me gusta</p>
                                 </div>
