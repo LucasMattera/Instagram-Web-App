@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navbar from '../Navbar/Navbar'
 import axios from "axios";
+import '../../styles/Home.css';
 
 const Home = () => {
     const [user,setUser] = useState({
@@ -29,43 +30,44 @@ const Home = () => {
             <Navbar />
             <div className="container-fluid">
                 <div className="row">
-                    <div className="posts col-md-3">
+                    <div className="posts-izquierda col-md-3 col-sm-12">
                     </div>
-                    <div className="posts col-md-5">
+                    <div className="posts-medio col-md-5 col-sm-12">
                         {user.timeline.map(post =>  (
                             <div className="post">
-                                <div className="imageUserPost">
+                                <div className="imagePost">
                                     <img src={post.user.image}/>
                                 </div>
                                 <div className="nameUserPost">
                                     <p>{post.user.name}</p>
                                 </div>
                                 <div className="imageUserPost">
-                                    <img src={post.portrait}/>
+                                    <img className="imageUserPost" src={post.portrait}/>
                                 </div>
                                 <div className="likeUserPost">
-                                    <p>{post.likes.length}</p>
+                                    <p>{post.likes.length} Me gusta</p>
                                 </div>
                                 <div className="descpUserPost">
                                     <p>{post.description}</p>
                                 </div>
                             </div>
                         ))}
+                          
                     </div>      
-                    <div className="posts col-md-4">
-                            <div className="userName">
-                                <p>{user.name}</p>
-                            </div>
+                    <div className="posts-derecha col-md-4 col-sm-12">
                             <div className="imagenUserName">
                                 <img src={user.image}/>
+                            </div>
+                            <div className="userName">
+                                <p>{user.name}</p>
                             </div>
                             <div className="followers">
                                 <h5>Followers</h5>
                                 {user.followers.map(follower => (
-                                    <ul>
-                                        <img src={follower.image}/>
-                                        <p>{follower.name}</p>
-                                    </ul>
+                                    <div>
+                                        <img className="imagenUserName" src={follower.image}/>
+                                        <p className="userName">{follower.name}</p>
+                                    </div>
                                 ))}
                             </div>
                     </div>
