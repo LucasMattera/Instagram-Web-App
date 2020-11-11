@@ -5,6 +5,7 @@ import '../../styles/Home.css';
 
 const Home = () => {
     const [user,setUser] = useState({
+        id: "",
         name: "",
         image: "",
         followers: [],
@@ -21,7 +22,9 @@ const Home = () => {
                 console.log(error)
             )            
     }, []
-    );      
+    ); 
+    
+    console.log(user)
 
     return(
         <div className="home">

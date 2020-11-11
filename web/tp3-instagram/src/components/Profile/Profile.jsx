@@ -4,33 +4,62 @@ import Navbar from '../Navbar/Navbar'
 import axios from "axios";
 
 const Profile = () => {
-    const { id } = useParams();
+
     const [user,setUser] = useState({
+        id: "",
         name: "",
         image: "",
-        posts: []
+        posts: [],
     })
 
-    useEffect(() => {
-            axios.get("http://localhost:7000/user/"+id)
-            .then(success =>{               
-                setUser(success.data)
-                
+    function getUserId(){
+        axios.get("http://localhost:7000/user/"+user.id)
+        .then(success=>{
+            setUser(success.data.posts)
+        }).catch(error => {
+            console.log(error) 
+        });
+    }
+
+
+    useEffect(() => {    
+            axios.get("http://localhost:7000/user")
+            .then(success =>{ 
+                setUser(success.data.id)              
+                setUser(success.data.name)
+                setUser(success.data.image)
+                getUserId()       
             })
             .catch(error =>
                 console.log(error)
-            )            
+            )              
     }, []
     )
 
+    
     console.log(user)
 
     return(
-        <div className="home">
-            <Navbar />
-            <h1>Hola</h1>
-        </div>
+        <div>Hola</div>
+
     )
 }
 
 export default Profile ;
+
+        /*<div className="profile">
+            <Navbar />
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="posts col-md-4 col-sm-12">
+                        {user.posts.map(post => (
+                             
+                            <div className="imageUserPost">
+                                <img className="imageUserPost" src={post.portrait}/>                              
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+        */
