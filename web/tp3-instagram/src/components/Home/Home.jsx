@@ -36,7 +36,7 @@ const Home = () => {
                         {user.timeline.map(post =>  (
                             <div className="post">
                                 <div className="imagePost">
-                                    <img src={post.user.image}/>
+                                    <img className="imagePost" src={post.user.image}/>
                                 </div>
                                 <div className="nameUserPost">
                                     <p>{post.user.name}</p>
@@ -56,7 +56,7 @@ const Home = () => {
                     </div>      
                     <div className="posts-derecha col-md-4 col-sm-12">
                             <div className="imagenUserName">
-                                <img src={user.image}/>
+                                <img className="imagenUserName" src={user.image}/>
                             </div>
                             <div className="userName">
                                 <p>{user.name}</p>
@@ -80,5 +80,3 @@ const Home = () => {
 
 
 export default Home ;
-        /*
-            */

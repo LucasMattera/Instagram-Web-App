@@ -4,10 +4,12 @@ import Register from '../components/Register/Register'
 import Home from '../components/Home/Home'
 import PublicRoute from './PublicRoute'
 import PrivateRoute from './PrivateRoute'
+import Profile from '../components/Profile/Profile'
 import {
   BrowserRouter as Router,
   Switch,
 } from "react-router-dom";
+
 
 export default function Routes() {
     return (
@@ -15,7 +17,8 @@ export default function Routes() {
             <Switch>
                 <PublicRoute path="/login" component={Login} />
                 <PublicRoute path="/register" component={Register} />
-                <PrivateRoute path="/" component={Home} />
+                <PrivateRoute path="/home" component={Home} />
+                <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="*" component={Home} /> 
             </Switch>
 

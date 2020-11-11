@@ -32,7 +32,7 @@ const Login = () => {
             .then((response) => {    
                 localStorage.setItem("token", response.headers.authorization);
                 axios.defaults.headers['authorization'] = localStorage.getItem('token')
-                history.push("/");       
+                history.push("/home");       
           })
             .catch(error => {
                 console.log("error : ", error.response.data.message);

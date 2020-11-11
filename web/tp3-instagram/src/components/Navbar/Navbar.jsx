@@ -11,8 +11,8 @@ const Navbar = () => {
         history.push("/");
       };
 
-    const goPerfil = () => {
-        history.push("/perfil") ;
+    const goProfile = () => {
+        history.push("/profile") ;
     }
 
     return (
@@ -22,7 +22,7 @@ const Navbar = () => {
                 <form className="form-inline">
                 <input className="form-control search" type="search" placeholder="Buscar..." aria-label="Search" />
                 </form>
-                <button className="navbar-profile" onClick={goPerfil}>Perfil</button>
+                <button type="submit" className="navbar-profile" onClick={goProfile}>Profile</button>
                 <button type="submit" onClick={logout}>Logout</button>
             </nav>
         </div>
