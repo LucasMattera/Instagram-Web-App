@@ -137,12 +137,27 @@ class UserController(private val instagramSystem : InstagramSystem) {
         val token = ctx.header("Authorization")
         val userId = tokenJWT.validateToken(token!!)
         val user = instagramSystem.getUser(userId)
+<<<<<<< HEAD
+=======
+
+        // var userPost = UserPostDTO(user.name, user.image)
+
+>>>>>>> bf24b0b957b6be56c5cff26cebc5d5bc7c89fb33
         val userTimeline = instagramSystem.timeline(userId).map {
             val likes = it.likes.map {
                 UserPostDTO(it.name, it.image)
             }.toMutableList()
-            PostUserDTO(it.id, it.description, it.portrait, it.landscape, it.date, likes, UserPostDTO(it.user.name, it.user.image))
+            PostUserDTO(
+                    it.id,
+                    it.description,
+                    it.portrait,
+                    it.landscape,
+                    it.date,
+                    likes,
+                    UserPostDTO(it.user.name, it.user.image)
+            )
         }.toMutableList()
+
         val followersUser = user.followers.map {
             UserPostDTO(it.name, it.image)
         }.toMutableList()
