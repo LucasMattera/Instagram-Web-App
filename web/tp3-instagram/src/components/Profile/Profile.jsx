@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom';
 import Navbar from '../Navbar/Navbar'
 import axios from "axios";
 import '../../styles/Home.css';
+import Api from "../../api/api";
 
 const Profile = () => {
     const [user,setUser] = useState({
@@ -13,7 +14,7 @@ const Profile = () => {
     const [posts,setPosts] = useState([])
 
     function getUserId(id){
-        axios.get("http://localhost:7000/user/" + id)
+        Api.getUserById(id)
         .then(success=>{
             setPosts(success.data.posts)
         }).catch(error => {
@@ -23,7 +24,7 @@ const Profile = () => {
 
 
     useEffect(() => {    
-            axios.get("http://localhost:7000/user")
+            Api.getUser()
             .then(success =>{ 
                setUser({id:success.data.id,
                         name:success.data.name,

@@ -5,7 +5,6 @@ import Home from '../components/Home/Home'
 import PublicRoute from './PublicRoute'
 import PrivateRoute from './PrivateRoute'
 import Profile from '../components/Profile/Profile'
-import Like from '../components/Like/Like'
 import {
   BrowserRouter as Router,
   Switch,

@@ -5,6 +5,7 @@ import '../../styles/Login.css';
 import logo from '../../images/fotoInstagram.png';
 import logoig from '../../images/instagram-new-logo.png' ;
 import axios from "axios";
+import Api from "../../api/api";
 
 const Login = () => {
     const history = useHistory();
@@ -28,7 +29,7 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:7000/login", data)
+        Api.login(data)
             .then((response) => {    
                 localStorage.setItem("token", response.headers.authorization);
                 history.push("/home");       

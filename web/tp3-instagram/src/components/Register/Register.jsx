@@ -5,6 +5,7 @@ import logoig from '../../images/instagram-new-logo.png' ;
 import logo from '../../images/fotoInstagram.png';
 import '../../styles/Register.css';
 import axios from "axios";
+import Api from "../../api/api";
 
 
 const Register = () => {
@@ -31,7 +32,7 @@ const Register = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:7000/register", data)
+        Api.register(data)
             .then((response) => {    
                 localStorage.setItem("token", response.headers.authorization);
                 axios.defaults.headers['authorization'] = localStorage.getItem('token')

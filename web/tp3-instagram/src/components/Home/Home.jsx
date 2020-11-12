@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import Navbar from '../Navbar/Navbar'
 import axios from "axios";
 import '../../styles/Home.css';
-import Like from '../Like/Like'
+import '../../api/api'
+import Api from "../../api/api";
 
 const Home = () => {
     const [user,setUser] = useState({
@@ -14,7 +15,7 @@ const Home = () => {
     })
 
     useEffect(() => {
-            axios.get("http://localhost:7000/user")
+            Api.getUser()
             .then(success =>{               
                 setUser(success.data)
                 
@@ -24,6 +25,8 @@ const Home = () => {
             )            
     }, []
     ); 
+
+
 
 
     return(
@@ -45,9 +48,8 @@ const Home = () => {
                                 <div className="imageUserPost">
                                     <img className="imageUserPost" src={post.portrait}/>
                                 </div>
-                                <form onSubmit={Like}>
-                                    <button type="submit" className="btn btn-link">Mg</button>
-                                </form>
+                                <button type="submit" className="btn btn-link" onClick=
+                                    {() => Api.userLike(post.id)}>Mg</button>
                                 <div className="likeUserPost">
                                     <p>{post.likes.length} Me gusta</p>
                                 </div>
