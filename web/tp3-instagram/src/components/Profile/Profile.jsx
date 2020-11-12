@@ -21,7 +21,6 @@ const Profile = () => {
         });
     }
 
-
     useEffect(() => {    
             axios.get("http://localhost:7000/user")
             .then(success =>{ 
