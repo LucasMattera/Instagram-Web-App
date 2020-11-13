@@ -2,40 +2,24 @@ import React, { useState, useEffect} from "react";
 import {useParams} from 'react-router-dom';
 import Navbar from '../Navbar/Navbar'
 import axios from "axios";
-import '../../styles/Home.css';
 import Api from "../../api/api";
 
-const Profile = () => {
+const User = () => {
+    const {id} = useParams()
     const [user,setUser] = useState({
-        id: "",
         name: "",
         image: "",
+        posts: []
     })
-    const [posts,setPosts] = useState([])
-
-    function getUserId(id){
-        Api.getUserById(id)
-        .then(success=>{
-            setPosts(success.data.posts)
-        }).catch(error => {
-            console.log(error) 
-        });
-    }
-
-
+     
     useEffect(() => {    
-            Api.getUser()
-            .then(success =>{ 
-               setUser({id:success.data.id,
-                        name:success.data.name,
-                        image:success.data.image})         
-
-                getUserId(success.data.id)       
-            })
-            .catch(error =>
-                console.log(error)
-            )              
-    }, []
+        Api.getUserById(id)
+            .then(success=>{
+                setUser(success.data)
+            }).catch(error => {
+                console.log(error) 
+            });          
+        }, []
     )
 
     
@@ -55,7 +39,7 @@ const Profile = () => {
             
             <div className="container-fluid">
                 <div className="row">
-                    {posts.map(post => (
+                    {user.posts.map(post => (
                         <div className="card col-md-4 col-sm-12">
                             <div className="imageUserPost">
                                 <img className="imageUserPost" src={post.landscape}/>
@@ -69,4 +53,5 @@ const Profile = () => {
     )
 }
 
-export default Profile ;
+export default User ;
+
