@@ -9,8 +9,25 @@ const User = () => {
     const [user,setUser] = useState({
         name: "",
         image: "",
+        followers: [],
         posts: []
     })
+    const [userLogued,setUserLogued] = useState({
+        name:"",
+        image:""
+    })
+
+    function getUserLogued() {
+        Api.getUser()
+            .then(success => {
+                setUserLogued({name:success.data.name,image:success.data.image})
+            })
+    }
+
+    function text() {
+        return user.followers.includes(userLogued)
+    }
+
      
     useEffect(() => {    
         Api.getUserById(id)
@@ -18,12 +35,13 @@ const User = () => {
                 setUser(success.data)
             }).catch(error => {
                 console.log(error) 
-            });          
+            });
+            getUserLogued()          
         }, []
     )
 
-    
-    console.log(user)
+    console.log(user.followers)
+    console.log(userLogued)
 
     return(
         <div>
@@ -35,7 +53,9 @@ const User = () => {
                 <div className="nameUserPost">
                     <p>{user.name}</p>
                 </div>
-            </div>
+                    <button type="submit" className="btn btn-link" onClick=
+                    {() => Api.userFollow(id)}>{user.followers.find(u => u.name === userLogued.name) ? 'unFollow' : 'Follow'}</button>
+                </div>
             
             <div className="container-fluid">
                 <div className="row">
