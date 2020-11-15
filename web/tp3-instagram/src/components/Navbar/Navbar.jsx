@@ -1,5 +1,6 @@
-import React from 'react' ;
+import React, { useEffect } from 'react' ;
 import { useHistory } from "react-router-dom";
+import Api from '../../api/api';
 import '../../styles/Navbar.css'
 
 const Navbar = () => {
@@ -16,20 +17,25 @@ const Navbar = () => {
     }
 
     const goHome = () => {
-        history.push("/home") ;
+        history.push("/home");
     }
 
-
+    const searchChanged = (event) => {
+        setState({ search: event.target.value })
+    }
 
     return (
         <div>
+            <search></search>
             <nav className="navbar navbar-light bg-light justify-content-between">
                 <a type="submit" className="navbar-brand" onClick={goHome}>Instagram</a>
                 <form className="form-inline">
-                <input className="form-control search" type="search" placeholder="Buscar..." aria-label="Search" />
+                <input className="form-control search" type="search" value = {searchChanged} placeholder="Buscar..." aria-label="Search" onChange = { () => Api.search()} />
+                <select name = "Perfil">
+                    <option type="submit" className="navbar-profile" onClick={goProfile}>Profile</option>
+                    <option type="submit" onClick={logout}>Logout</option>
+                </select>
                 </form>
-                <button type="submit" className="navbar-profile" onClick={goProfile}>Profile</button>
-                <button type="submit" onClick={logout}>Logout</button>
             </nav>
         </div>
 
