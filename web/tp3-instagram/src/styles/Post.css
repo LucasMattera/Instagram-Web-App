@@ -1,0 +1,34 @@
+.nameUserComment  {
+    margin-top: 1%;
+    display: inline-block;
+    margin-bottom: 2%;
+}
+
+.imageUserComment { 
+    margin-top: 1%;
+    display: inline-block;
+    margin-bottom: 2%;
+}
+
+.commentBody {
+    margin-left: 2%;
+}
+
+.post-medio {
+    border: 1px solid rgb(209, 208, 208)
+}
+
+.imagePostt {
+    width: 100%;
+}
+
+.imageUser {
+    width:50px;
+    height:50px;
+    border-radius:50px;
+    border:1px solid rgb(209, 208, 208);
+}
+
+.nameUserComment {
+    margin-left: 1%;
+}

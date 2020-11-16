@@ -1,4 +1,19 @@
-.card {
-    margin-left: 3%;
-    margin-right: 3%;
+.image_Post{
+    width:50px;
+    height:50px;
+    border-radius:50px;
+    border: 1px solid rgb(209, 208, 208);
+    display: inline-block;
+    margin-right: 1%;
+    margin-top: 1%;  
+}
+
+.imagee {
+    margin-right: 1%;
+    margin-top: 1%;
+}
+
+
+.nameUserPost, .imagee {
+    display: inline-block;
 }

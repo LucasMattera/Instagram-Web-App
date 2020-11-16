@@ -4,6 +4,7 @@ import axios from "axios";
 import '../../styles/Home.css';
 import '../../api/api'
 import Api from "../../api/api";
+import User from '../User/User'
 
 const Home = () => {
     const [user,setUser] = useState({
@@ -40,7 +41,7 @@ const Home = () => {
                         {user.timeline.map(post => (
                             <div className="post">
                                 <div className="imagePost">
-                                    <img className="imagePost" src={post.user.image}/>
+                                    <img className="imageePost" src={post.user.image}/>
                                 </div>
                                 <div className="nameUserPost">
                                     <p>{post.user.name}</p>
@@ -61,7 +62,7 @@ const Home = () => {
                           
                     </div>      
                     <div className="posts-derecha col-md-4 col-sm-12">
-                            <div className="imagenUserName">
+                            <div className="imagenUserNamee">
                                 <img className="imagenUserName" src={user.image}/>
                             </div>
                             <div className="userName">
@@ -71,8 +72,8 @@ const Home = () => {
                                 <h5>Followers</h5>
                                 {user.followers.map(follower => (
                                     <div>
-                                        <img className="imagenUserName" src={follower.image}/>
-                                        <p className="userName">{follower.name}</p>
+                                        <img className="imagenUserName" src={follower.image} />
+                                        <p className="userName">{follower.name} </p>
                                     </div>
                                 ))}
                             </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect} from "react";
 import {useParams} from 'react-router-dom';
 import Navbar from '../Navbar/Navbar'
 import axios from "axios";
-import '../../styles/Home.css';
+import '../../styles/Profile.css';
 import Api from "../../api/api";
 
 const Profile = () => {
@@ -45,8 +45,8 @@ const Profile = () => {
         <div>
             <Navbar />
             <div className="user text-center">
-                <div className="imagePost">
-                    <img className="imagePost" src={user.image}/>
+                <div className="imagee">
+                    <img className="image_Post" src={user.image}/>
                 </div>
                 <div className="nameUserPost">
                     <p>{user.name}</p>

@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom';
 import Navbar from '../Navbar/Navbar'
 import axios from "axios";
 import Api from "../../api/api";
+import '../../styles/Profile.css';
 
 const User = () => {
     const {id} = useParams()
@@ -24,10 +25,6 @@ const User = () => {
             })
     }
 
-    function text() {
-        return user.followers.includes(userLogued)
-    }
-
      
     useEffect(() => {    
         Api.getUserById(id)
@@ -40,15 +37,12 @@ const User = () => {
         }, []
     )
 
-    console.log(user.followers)
-    console.log(userLogued)
-
     return(
         <div>
             <Navbar />
             <div className="user text-center">
-                <div className="imagePost">
-                    <img className="imagePost" src={user.image}/>
+                <div className="imagee">
+                    <img className="image_Post" src={user.image}/>
                 </div>
                 <div className="nameUserPost">
                     <p>{user.name}</p>
