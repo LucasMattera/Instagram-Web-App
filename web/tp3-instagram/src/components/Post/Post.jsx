@@ -9,39 +9,52 @@ const Post = () => {
     const [post,setPost] = useState({
         landscape: "",
         likes: [],
-        comments: []
+    })
+    const [comments,setComments] = useState([])
+
+    const [comment,setComment] = useState({
+        body: "",
     })
 
-    const [user,setUser] = useState({
-        name:"",
-        image:"",
-    })
+    const handleInputChange = (event) => {
+        setComment({
+          ...comment,
+          [event.target.name]: event.target.value,
+        });
+      };
 
-    function getUserLogued() {
-        Api.getUser()
-            .then(success => {
-                setUser({name:success.data.name,image:success.data.image})
-            })
-            .catch(error => {
-                console.log(error)
-            })
+    const addComment = (body) => {
+        const token = localStorage.getItem("token")
+        const data = {
+            body: body,
+        };
+        const headers = {
+            authorization: token,
+          };
+        Api.postComment((id,data),headers)
+            .then((response) =>
+                setComments((prevState) => [...prevState,{body}])
+            )
+            .catch((error) => console.log(error)
+        ) 
     }
 
     function getPostById(id) {
         Api.getPostById(id)
             .then(success => {
-                setPost({landscape:success.data.landscape,likes:success.data.likes,comments:success.data.comments})
+                setPost({landscape:success.data.landscape,likes:success.data.likes})
+                setComments(success.data.comments)
             })
             .catch(error => {
                 console.log(error)
             })
     }
 
-    useEffect(() => { 
-        getUserLogued()      
+    useEffect(() => {      
         getPostById(id)
     },[])
 
+    console.log(comment.body)
 
     return(
         <div className="post">
@@ -57,10 +70,11 @@ const Post = () => {
                             <div className="like">
                                 <p>{post.likes.length} Me gusta</p>
                             </div>
+                            
                             <hr/>
                         </div>
                             
-                        {post.comments.map(comment => (
+                        {comments.map(comment => (
                             <div className="comment">
                                 <div className="imageUserComment">
                                     <img className="imageUser" src={comment.user.image}/>
@@ -74,7 +88,12 @@ const Post = () => {
                                 <hr/>
                             </div>
                         ))}
-                        
+                        <form onSubmit={addComment}>
+                            <input className="form-control" type="text" name="body" value={comment.body} onChange={handleInputChange} placeholder="Publicar"/>
+                            <div className="button">
+                                <button type="submit" className="">Agregar</button>
+                            </div>       
+                        </form>        
                     </div>      
                     <div className="posts-derecha col-md-3 col-sm-12"></div>
                 </div>

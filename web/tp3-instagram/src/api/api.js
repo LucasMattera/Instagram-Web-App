@@ -9,7 +9,7 @@ var Api = {
     register : function(data) {return axios.post("http://localhost:7000/register",data)},
     userFollow : function(id) {return axios.put(`http://localhost:7000/user/${id}/follow`)},
     search : function() {return axios.get("http://localhost:7000/search")},
-    postComment : function(id) {return axios.post(`http://localhost:7000/post/${id}/comment`)},
+    postComment : function(id,data) {return axios.post(`http://localhost:7000/post/${id}/comment`,data)},
 } 
 
 export default Api ;
