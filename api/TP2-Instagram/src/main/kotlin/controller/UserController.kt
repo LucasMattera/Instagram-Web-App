@@ -83,20 +83,20 @@ class UserController(private val instagramSystem : InstagramSystem) {
         try {
             val user = instagramSystem.getUser(userId)
             val posts = instagramSystem.searchByUserId(userId)
-            var userPost = UserPostDTO(user.name, user.image)
+            var userPost = UserPostDTO(userId,user.name, user.image)
 
             val followersUser = user.followers.map {
-                UserPostDTO(it.name, it.image)
+                UserPostDTO(it.id,it.name, it.image)
             }.toMutableList()
             val postsUser = posts.map {
                 val likes = it.likes.map {
-                    UserPostDTO(it.name, it.image)
+                    UserPostDTO(it.id,it.name, it.image)
                 }.toMutableList()
                 PostUserDTO(it.id, it.description, it.portrait, it.landscape, it.date, likes, userPost)
             }.toMutableList()
 
             ctx.json(
-                    UserGetDTO(user.name, user.image, followersUser, postsUser)
+                    UserGetDTO(userId, user.name, user.image, followersUser, postsUser)
             )
         } catch (e: NotFound) {
             ctx.status(404)
@@ -139,12 +139,12 @@ class UserController(private val instagramSystem : InstagramSystem) {
         val user = instagramSystem.getUser(userId)
         val userTimeline = instagramSystem.timeline(userId).map {
             val likes = it.likes.map {
-                UserPostDTO(it.name, it.image)
+                UserPostDTO(it.id,it.name, it.image)
             }.toMutableList()
-            PostUserDTO(it.id, it.description, it.portrait, it.landscape, it.date, likes, UserPostDTO(it.user.name, it.user.image))
+            PostUserDTO(it.id, it.description, it.portrait, it.landscape, it.date, likes, UserPostDTO(it.user.id, it.user.name, it.user.image))
         }.toMutableList()
         val followersUser = user.followers.map {
-            UserPostDTO(it.name, it.image)
+            UserPostDTO(it.id,it.name, it.image)
         }.toMutableList()
 
         ctx.status(200)

@@ -12,28 +12,24 @@ const Post = () => {
     })
     const [comments,setComments] = useState([])
 
-    const [comment,setComment] = useState({
-        body: "",
-    })
+    const [comment,setComment] = useState("")
 
     const handleInputChange = (event) => {
-        setComment({
-          ...comment,
-          [event.target.name]: event.target.value,
-        });
-      };
+        setComment(event.target.value)
+    }
 
-    const addComment = (body) => {
+    const addComment = (event) => {
+        event.preventDefault()
         const token = localStorage.getItem("token")
         const data = {
-            body: body,
+            body: comment,
         };
         const headers = {
             authorization: token,
           };
-        Api.postComment((id,data),headers)
+        Api.postComment(id,data,{headers:headers})
             .then((response) =>
-                setComments((prevState) => [...prevState,{body}])
+                setComments(response.data)
             )
             .catch((error) => console.log(error)
         ) 
@@ -54,7 +50,7 @@ const Post = () => {
         getPostById(id)
     },[])
 
-    console.log(comment.body)
+    console.log(comment)
 
     return(
         <div className="post">
@@ -89,9 +85,9 @@ const Post = () => {
                             </div>
                         ))}
                         <form onSubmit={addComment}>
-                            <input className="form-control" type="text" name="body" value={comment.body} onChange={handleInputChange} placeholder="Publicar"/>
+                            <input className="form-control" type="text" name="body" value={comment} onChange={handleInputChange} placeholder="Publicar"/>
                             <div className="button">
-                                <button type="submit" className="">Agregar</button>
+                                <button type="text" className="">Agregar</button>
                             </div>       
                         </form>        
                     </div>      

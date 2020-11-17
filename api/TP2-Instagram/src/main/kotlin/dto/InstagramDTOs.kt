@@ -16,7 +16,8 @@ data class PostUserDTO(val id: String,
                        val likes: MutableList<UserPostDTO>,
                        val user: UserPostDTO)
 
-data class UserGetDTO(val name:String,
+data class UserGetDTO(val id:String,
+                      val name:String,
                       val image:String,
                       val followers: MutableList<UserPostDTO>,
                       val posts: MutableList<PostUserDTO>)
@@ -31,7 +32,8 @@ data class UserSearchDTO(val name : String, val image: String, val followers : M
 data class DescriptionPostDTO(val posts: MutableList<PostUserDTO>)
 data class UserByNameDTO(val users: MutableList<UserSearchDTO>)
 
-data class UserPostDTO(val name: String,
+data class UserPostDTO(val id:String,
+                       val name: String,
                        val image: String)
 
 data class CommentDTO(val id: String,

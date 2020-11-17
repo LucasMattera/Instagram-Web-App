@@ -9,7 +9,8 @@ const Search = () => {
     const {search} = useParams() ;
 
     useEffect(() => {
-        Api.search(search)
+
+        Api.search(search.replace("#","%23"))
         .then(success => {
             if (search.charAt(0) === "%") {
                 userSearchData(success.data.posts)

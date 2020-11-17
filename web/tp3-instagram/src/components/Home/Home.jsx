@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from '../Navbar/Navbar'
 import axios from "axios";
 import '../../styles/Home.css';
@@ -40,14 +41,19 @@ const Home = () => {
                     <div className="posts-medio col-md-5 col-sm-12">
                         {user.timeline.map(post => (
                             <div className="post">
+                                {console.log(post)}
                                 <div className="imagePost">
-                                    <img className="imageePost" src={post.user.image}/>
+                                    <Link to={`/user/${post.user.id}`}>
+                                        <img className="imageePost" src={post.user.image}/>
+                                    </Link>
                                 </div>
                                 <div className="nameUserPost">
                                     <p>{post.user.name}</p>
                                 </div>
                                 <div className="imageUserPost">
-                                    <img className="imageUserPost" src={post.portrait}/>
+                                    <Link to={`/post/${post.id}`}>
+                                        <img className="imageUserPost" src={post.portrait}/>
+                                    </Link>
                                 </div>
                                 <button type="submit" className="btn btn-link" onClick=
                                     {() => Api.userLike(post.id)}>Mg</button>
@@ -72,7 +78,9 @@ const Home = () => {
                                 <h5>Followers</h5>
                                 {user.followers.map(follower => (
                                     <div>
-                                        <img className="imagenUserName" src={follower.image} />
+                                        <Link to={`/user/${follower.id}`}>
+                                            <img className="imagenUserName" src={follower.image} />
+                                        </Link>
                                         <p className="userName">{follower.name} </p>
                                     </div>
                                 ))}

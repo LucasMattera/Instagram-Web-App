@@ -16,9 +16,9 @@ class InstagramController(private val instagramSystem : InstagramSystem) {
         if (textToSearch.startsWith('#') ) {
             val postDescription = instagramSystem.searchByTag(textToSearch).map {
                 val likes = it.likes.map {
-                    UserPostDTO(it.name, it.image)
+                    UserPostDTO(it.id,it.name, it.image)
                 }.toMutableList()
-                val userPost = UserPostDTO(it.user.name, it.user.image)
+                val userPost = UserPostDTO(it.user.id,it.user.name, it.user.image)
 
                 PostUserDTO(it.id, it.description, it.portrait, it.landscape, it.date, likes, userPost)
             }.toMutableList()
@@ -28,7 +28,7 @@ class InstagramController(private val instagramSystem : InstagramSystem) {
         } else {
             val postUser = instagramSystem.searchByName(textToSearch).map {
                 val followersUser = it.followers.map {
-                    UserPostDTO(it.name, it.image)
+                    UserPostDTO(it.id,it.name, it.image)
                 }.toMutableList()
                 UserSearchDTO(it.name, it.image, followersUser)
             }.toMutableList()

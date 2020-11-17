@@ -27,11 +27,11 @@ class PostController(private val instagramSystem : InstagramSystem) {
         try {
             val post = instagramSystem.getPost(postId)
             var likesPost = post.likes.map {
-                UserPostDTO(it.name, it.image) }.toMutableList()
+                UserPostDTO(it.id,it.name, it.image) }.toMutableList()
             var commentPost = post.comments.map {
-                CommentDTO(it.id, it.body, UserPostDTO(it.user.name,it.user.image))
+                CommentDTO(it.id, it.body, UserPostDTO(it.user.id,it.user.name,it.user.image))
             }.toMutableList()
-            var userPost = UserPostDTO(post.user.name,post.user.image)
+            var userPost = UserPostDTO(post.user.id,post.user.name,post.user.image)
 
             ctx.json(
                 PostDTO(postId,post.description,post.portrait,post.landscape,post.date,likesPost,userPost,commentPost)
@@ -65,9 +65,12 @@ class PostController(private val instagramSystem : InstagramSystem) {
         validateComment(ctx) ;
 
         try {
-            instagramSystem.addComment(postId, userId, comment)
+            val post = instagramSystem.addComment(postId, userId, comment)
+            val comentarios = post.comments.map {
+                CommentDTO(it.id,it.body,UserPostDTO(it.user.id,it.user.name,it.user.image))
+            }
             ctx.status(200)
-            ctx.json(OkResponse())
+            ctx.json(comentarios)
         } catch (e: NotFound) {
             ctx.status(404).json(ErrorResponse("not found post with id $postId"))
         }
