@@ -7,6 +7,7 @@ import PrivateRoute from './PrivateRoute'
 import Profile from '../components/Profile/Profile'
 import User from '../components/User/User'
 import Post from '../components/Post/Post'
+import Search from '../components/Search/Search'
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,6 +24,7 @@ export default function Routes() {
                 <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="/user/:id" component={User} />
                 <PrivateRoute path="/post/:id" component={Post} />
+                <PrivateRoute path="/search/:search" component={Search} />
                 <PrivateRoute path="*" component={Home} /> 
             </Switch>
 
