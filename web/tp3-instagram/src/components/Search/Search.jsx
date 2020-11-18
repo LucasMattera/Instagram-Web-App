@@ -10,9 +10,9 @@ const Search = () => {
 
     useEffect(() => {
 
-        Api.search(search.replace("#","%23"))
-        .then(success => {
-            if (search.charAt(0) === "%") {
+    Api.search(search.replace("#","%23"))
+        .then(success => {  
+            if (search[0] === "%") {
                 userSearchData(success.data.posts)
             } else {
                 userSearchData(success.data.users)
@@ -27,7 +27,7 @@ const Search = () => {
     console.log(searchData)
 
     function handleContent(data) {
-        if(search.charAt(0) === "%"){
+        if(search[0] === "%"){
             return (
             <div className="post text-center">
                 <div className="dataImage">

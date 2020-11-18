@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import {useParams} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Navbar from '../Navbar/Navbar'
-import axios from "axios";
 import Api from "../../api/api";
 import '../../styles/Profile.css';
 
@@ -47,16 +47,18 @@ const User = () => {
                 <div className="nameUserPost">
                     <p>{user.name}</p>
                 </div>
-                    <button type="submit" className="btn btn-link" onClick=
-                    {() => Api.userFollow(id)}>{user.followers.find(u => u.name === userLogued.name) ? 'unFollow' : 'Follow'}</button>
-                </div>
-            
+                <form onSubmit={() => Api.userFollow(id)}>
+                    <button type="submit" className="btn btn-link" >{user.followers.find(u => u.name === userLogued.name) ? 'unFollow' : 'Follow'}</button>
+                </form>
+            </div>
             <div className="container-fluid">
                 <div className="row">
                     {user.posts.map(post => (
                         <div className="card col-md-4 col-sm-12">
                             <div className="imageUserPost">
+                                <Link to={`/post/${post.id}`}>
                                 <img className="imageUserPost" src={post.landscape}/>
+                                </Link>
                             </div>
                         </div>    
                     ))}

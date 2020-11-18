@@ -34,5 +34,10 @@
 }
 
 .like {
-    margin-top: 1%
+    margin-top: 1%;
+    margin-left: 1%;
+}
+
+.iconMg , .like {
+    display: inline-block;
 }

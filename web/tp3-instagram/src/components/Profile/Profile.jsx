@@ -1,7 +1,6 @@
 import React, { useState, useEffect} from "react";
-import {useParams} from 'react-router-dom';
-import Navbar from '../Navbar/Navbar'
-import axios from "axios";
+import Navbar from '../Navbar/Navbar';
+import { Link } from "react-router-dom";
 import '../../styles/Profile.css';
 import Api from "../../api/api";
 
@@ -58,8 +57,11 @@ const Profile = () => {
                     {posts.map(post => (
                         <div className="card col-md-4 col-sm-12">
                             <div className="imageUserPost">
-                                <img className="imageUserPost" src={post.landscape}/>
+                                <Link to={`/post/${post.id}`}>
+                                    <img className="imageUserPost" src={post.landscape}/>
+                                </Link>
                             </div>
+                            
                         </div>    
                     ))}
                 </div>

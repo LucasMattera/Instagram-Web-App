@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from '../Navbar/Navbar'
-import axios from "axios";
 import '../../styles/Home.css';
 import '../../api/api'
 import Api from "../../api/api";
-import User from '../User/User'
+
 
 const Home = () => {
     const [user,setUser] = useState({
@@ -28,7 +27,9 @@ const Home = () => {
     }, []
     ); 
 
-
+    function likePost(post) {
+        Api.userLike(post.id)
+    }
 
 
     return(
@@ -41,7 +42,6 @@ const Home = () => {
                     <div className="posts-medio col-md-5 col-sm-12">
                         {user.timeline.map(post => (
                             <div className="post">
-                                {console.log(post)}
                                 <div className="imagePost">
                                     <Link to={`/user/${post.user.id}`}>
                                         <img className="imageePost" src={post.user.image}/>
@@ -55,8 +55,13 @@ const Home = () => {
                                         <img className="imageUserPost" src={post.portrait}/>
                                     </Link>
                                 </div>
-                                <button type="submit" className="btn btn-link" onClick=
-                                    {() => Api.userLike(post.id)}>Mg</button>
+                                <form onSubmit={() => likePost(post)}>
+                                    <button type="text" className="btn btn-link">
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-heart-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+                                        </svg>    
+                                    </button>
+                                </form>
                                 <div className="likeUserPost">
                                     <p>{post.likes.length} Me gusta</p>
                                 </div>

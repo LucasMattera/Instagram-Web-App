@@ -52,3 +52,16 @@ hr {
     margin-right: 1%;
 }
 
+.btn , .likeUserPost {
+    display: inline-block;
+}
+
+.likeUserPost {
+    margin-top: 1%;
+}
+
+.descpUserPost {
+    margin-left: 2%;
+}
+
+
