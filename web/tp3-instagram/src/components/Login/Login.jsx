@@ -35,9 +35,18 @@ const Login = () => {
                 history.push("/home");       
           })
             .catch(error => {
-                console.log("error : ", error.response.data.message);
-                const errorUser = error.response.data.message ;
-                notify.show(errorUser,"error",5000,myColor);          
+                const errorUser = error.response.data.title ;
+                const errorUserLog = error.response.data.message ;
+                if (errorUser == undefined) {
+                    notify.show(errorUserLog,"error",5000,myColor);    
+                }
+                else {
+                    notify.show(errorUser,"error",5000,myColor);  
+                }
+                
+                
+                
+                       
         });
         
       };
@@ -61,10 +70,10 @@ const Login = () => {
                         <form onSubmit={handleSubmit}>
                             <div id="login">
                                 <div className="form-group" >
-                                    <input className="form-control" type="text" name="email" value={data.email} onChange={handleInputChange} placeholder="Email" required />
+                                    <input className="form-control" type="text" name="email" value={data.email} onChange={handleInputChange} placeholder="Email"/>
                                 </div>
                                 <div className="form-group" >
-                                    <input className="form-control" type="password" name="password" value={data.password} onChange={handleInputChange} placeholder="Password" required />
+                                    <input className="form-control" type="password" name="password" value={data.password} onChange={handleInputChange} placeholder="Password"/>
                                 </div>
                                 <div className="button">
                                     <button type="submit" className="btn btn-primary btn-lg btn-block">Iniciar sesion</button>

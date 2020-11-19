@@ -33,6 +33,7 @@ class UserController(private val instagramSystem : InstagramSystem) {
                             .matches(it.email)
                 }, "Invalid email address")
                 .check({ it.password.isNotEmpty() }, "Password cannot be empty")
+                .check({ it.password.count() >= 4 }, "Password must have four characters at least")
                 .check({ it.image.isNotEmpty() }, "Image cannot be empty")
                 .get()
     }

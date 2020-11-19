@@ -39,8 +39,8 @@ const Register = () => {
                 history.push("/");       
             })
             .catch(error => {
-                console.log("error : ", error.response.data.message);
-                const errorUser = error.response.data.message ;
+                console.log("error : ", error.response.data.title);
+                const errorUser = error.response.data.title ;
                 notify.show(errorUser,"error",5000,myColor);          
             });
         
@@ -64,16 +64,16 @@ const Register = () => {
                             <h2>Regístrate para ver fotos y videos de tus amigos.</h2>
                             <div id="login">
                                 <div className="form-group" >
-                                    <input className="form-control" type="text" name="name" value={data.name} onChange={handleInputChange} placeholder="Name" required />
+                                    <input className="form-control" type="text" name="name" value={data.name} onChange={handleInputChange} placeholder="Name" />
                                 </div>
                                 <div className="form-group" >
-                                    <input className="form-control" type="email" name="email" value={data.email} onChange={handleInputChange} placeholder="Email" required />
+                                    <input className="form-control" type="text" name="email" value={data.email} onChange={handleInputChange} placeholder="Email" />
                                 </div>
                                 <div className="form-group" >
-                                    <input className="form-control" type="password" name="password" value={data.password} onChange={handleInputChange} placeholder="Password" required />
+                                    <input className="form-control" type="password" name="password" value={data.password} onChange={handleInputChange} placeholder="Password" />
                                 </div>
                                 <div className="form-group" >
-                                    <input className="form-control" type="text" name="image" value={data.image} onChange={handleInputChange} placeholder="Image" required />
+                                    <input className="form-control" type="text" name="image" value={data.image} onChange={handleInputChange} placeholder="Image" />
                                 </div>
                                 <div className="button">
                                     <button type="submit" className="btn btn-primary btn-lg btn-block">Registrarte</button>
