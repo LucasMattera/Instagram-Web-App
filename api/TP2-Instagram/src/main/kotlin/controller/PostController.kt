@@ -51,7 +51,10 @@ class PostController(private val instagramSystem : InstagramSystem) {
         val postId = ctx.pathParam("id")
         try {
             instagramSystem.updateLike(postId, userId)
-            ctx.json(OkResponse())
+            val likes = instagramSystem.getPost(postId).likes.map {
+                UserPostDTO(it.id,it.name,it.image)
+            }
+            ctx.json(likes)
         } catch (e: NotFound) {
             ctx.status(404).json(ErrorResponse("not found post with id $postId"))
         }

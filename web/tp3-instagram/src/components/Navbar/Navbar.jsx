@@ -32,7 +32,7 @@ const Navbar = () => {
                 <a type="submit" className="navbar-brand" onClick={goHome}>Instagram</a>
                 <form className="form-inline">
                     <input className="form-control search" placeholder="Buscar..." aria-label="Search" onChange={changeSearch} />
-                    <Link to={"/search/"+search}>
+                    <Link to={`/search?q=${search}`}>
                         <button className="btn btn-outline-success my-2 my-sm-0" type="submit" hidden="hidden">Search</button>
                     </Link>
                 </form>

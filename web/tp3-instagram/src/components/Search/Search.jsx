@@ -1,18 +1,20 @@
 import React, { useState, useEffect} from "react";
-import {useParams} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import Navbar from '../Navbar/Navbar'
 import Api from "../../api/api";
 import '../../styles/Search.css';
 
 const Search = () => {
     const [searchData,userSearchData] = useState([])
-    const {search} = useParams() ;
-
-    useEffect(() => {
-
-    Api.search(search.replace("#","%23"))
-        .then(success => {  
-            if (search[0] === "%") {
+    const location = useLocation() ;
+    const newLocation = location.search.slice(3) || location.hash.replace("#","%23")
+    
+    useEffect(() => {   
+    Api.search(newLocation)
+        
+        .then(success => {
+            
+            if (newLocation[0] === "%") {
                 userSearchData(success.data.posts)
             } else {
                 userSearchData(success.data.users)
@@ -22,12 +24,14 @@ const Search = () => {
             console.log(error)
         }) 
 
-    },[])
+    },[location])
+    
+    console.log(location.search.slice(3))
 
     console.log(searchData)
 
     function handleContent(data) {
-        if(search[0] === "%"){
+        if(newLocation[0] === "%"){
             return (
             <div className="post text-center">
                 <div className="dataImage">
@@ -38,7 +42,7 @@ const Search = () => {
         else{
             return (
             <div className="user text-center">
-                <div className="dataImage_">
+                <div className="dataImage_">               
                     <img className="data_Imagee" src={data.image}/>
                 </div>
                 <div className="dataName">

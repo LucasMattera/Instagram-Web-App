@@ -6,7 +6,6 @@ import org.unq.ui.model.InstagramSystem
 import org.unq.ui.model.NotFound
 import org.unq.ui.model.UsedEmail
 import token.TokenController
-import java.time.LocalDateTime
 
 class UserController(private val instagramSystem : InstagramSystem) {
 
@@ -109,21 +108,20 @@ class UserController(private val instagramSystem : InstagramSystem) {
 
     fun followerUser(ctx: Context) {
         val token = ctx.header("Authorization")
-        val toUserId = tokenJWT.validateToken(token!!)
-        val fromUser = ctx.pathParam("id")
-        if (toUserId != fromUser) {
+        val userLogued = tokenJWT.validateToken(token!!)
+        val userToFollow = ctx.pathParam("id")
+        if (userLogued != userToFollow) {
             try {
-                instagramSystem.updateFollower(fromUser, toUserId)
+                instagramSystem.updateFollower(userToFollow, userLogued)
+                val followin = instagramSystem.getUser(userLogued).followers.map {
+                    UserPostDTO(it.id,it.name,it.image)
+                }
                 ctx.status(200)
-                ctx.json(
-                        mapOf(
-                                "result" to "ok"
-                        )
-                )
+                ctx.json(followin)
             } catch (e: NotFound) {
                 ctx.status(404)
                 ctx.json(
-                        mapOf("result" to "Not found user with : $fromUser")
+                        mapOf("result" to "Not found user with : $userToFollow")
                 )
             }
         } else {

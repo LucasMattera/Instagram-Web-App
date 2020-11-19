@@ -24,7 +24,7 @@ export default function Routes() {
                 <PrivateRoute path="/profile" component={Profile} />
                 <PrivateRoute path="/user/:id" component={User} />
                 <PrivateRoute path="/post/:id" component={Post} />
-                <PrivateRoute path="/search/:search" component={Search} />
+                <PrivateRoute path="/search" component={Search} />
                 <PrivateRoute path="*" component={Home} /> 
             </Switch>
 

@@ -37,6 +37,22 @@ const User = () => {
         }, []
     )
 
+
+    const addFollower = (user) => {
+        Api.userFollow(user.id)
+        .then(success =>
+            setUser(prevUser => ({
+                ...prevUser,
+                followers: prevUser.followers.map(f => {
+                    if ( f.id == user.id) {
+                        return {...user, followers:success.data}
+                    }
+                    return f
+                }) 
+            }))
+        )
+    }
+
     return(
         <div>
             <Navbar />
@@ -47,9 +63,9 @@ const User = () => {
                 <div className="nameUserPost">
                     <p>{user.name}</p>
                 </div>
-                <form onSubmit={() => Api.userFollow(id)}>
-                    <button type="submit" className="btn btn-link" >{user.followers.find(u => u.name === userLogued.name) ? 'unFollow' : 'Follow'}</button>
-                </form>
+                <button type="text" className="btn btn-link" 
+                    onClick={(event) => 
+                    {event.preventDefault(); addFollower(user) }}>{user.followers.find(u => u.name === userLogued.name) ? 'unFollow' : 'Follow'}</button>
             </div>
             <div className="container-fluid">
                 <div className="row">

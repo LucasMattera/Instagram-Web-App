@@ -49,6 +49,7 @@ const Post = () => {
     useEffect(() => {      
         getPostById(id)
     },[])
+    
 
     console.log(comment)
 
