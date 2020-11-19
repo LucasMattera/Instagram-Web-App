@@ -43,15 +43,12 @@ const User = () => {
         .then(success =>
             setUser(prevUser => ({
                 ...prevUser,
-                followers: prevUser.followers.map(f => {
-                    if ( f.id == user.id) {
-                        return {...user, followers:success.data}
-                    }
-                    return f
-                }) 
+                followers: success.data          
             }))
         )
     }
+
+    console.log(user.followers)
 
     return(
         <div>

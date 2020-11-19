@@ -30,7 +30,7 @@ class InstagramController(private val instagramSystem : InstagramSystem) {
                 val followersUser = it.followers.map {
                     UserPostDTO(it.id,it.name, it.image)
                 }.toMutableList()
-                UserSearchDTO(it.name, it.image, followersUser)
+                UserSearchDTO(it.id,it.name, it.image, followersUser)
             }.toMutableList()
             ctx.json(
                 UserByNameDTO(postUser)

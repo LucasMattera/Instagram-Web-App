@@ -28,7 +28,7 @@ data class UserTimelineDTO (val id: String,
                             val followers: MutableList<UserPostDTO>,
                             val timeline : MutableList<PostUserDTO>)
 
-data class UserSearchDTO(val name : String, val image: String, val followers : MutableList<UserPostDTO>)
+data class UserSearchDTO(val id:String, val name : String, val image: String, val followers : MutableList<UserPostDTO>)
 data class DescriptionPostDTO(val posts: MutableList<PostUserDTO>)
 data class UserByNameDTO(val users: MutableList<UserSearchDTO>)
 
