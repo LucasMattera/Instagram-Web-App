@@ -113,11 +113,11 @@ class UserController(private val instagramSystem : InstagramSystem) {
         if (userLogued != userToFollow) {
             try {
                 instagramSystem.updateFollower(userToFollow, userLogued)
-                val followin = instagramSystem.getUser(userLogued).followers.map {
+                val followers = instagramSystem.getUser(userLogued).followers.map {
                     UserPostDTO(it.id,it.name,it.image)
                 }
                 ctx.status(200)
-                ctx.json(followin)
+                ctx.json(followers)
             } catch (e: NotFound) {
                 ctx.status(404)
                 ctx.json(

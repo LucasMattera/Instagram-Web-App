@@ -96,7 +96,7 @@ const Home = () => {
                                 <p>{user.name}</p>
                             </div>
                             <div className="followers">
-                                <h5>Following</h5>
+                                <h5>Followers</h5>
                                 {user.followers.map(follower => (
                                     <div>
                                         <Link to={`/user/${follower.id}`}>
