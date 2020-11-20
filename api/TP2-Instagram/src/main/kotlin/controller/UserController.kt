@@ -113,7 +113,7 @@ class UserController(private val instagramSystem : InstagramSystem) {
         val userToFollow = ctx.pathParam("id")
         if (userLogued != userToFollow) {
             try {
-                instagramSystem.updateFollower(userToFollow, userLogued)
+                instagramSystem.updateFollower(userLogued,userToFollow)
                 val followers = instagramSystem.getUser(userLogued).followers.map {
                     UserPostDTO(it.id,it.name,it.image)
                 }

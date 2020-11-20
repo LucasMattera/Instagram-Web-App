@@ -17,3 +17,7 @@
 .nameUserPost, .imagee {
     display: inline-block;
 }
+
+.btn {
+    margin-left: 1%;
+}

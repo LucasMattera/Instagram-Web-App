@@ -15,14 +15,24 @@ const User = () => {
     })
     const [userLogued,setUserLogued] = useState({
         name:"",
-        image:""
+        image:"",
+        followers:[]
     })
+    const [colorButton,setColorButton] = useState("")
 
     function getUserLogued() {
         Api.getUser()
             .then(success => {
-                setUserLogued({name:success.data.name,image:success.data.image})
+                setUserLogued({name:success.data.name,image:success.data.image,followers:success.data.followers})
             })
+    }
+
+    const handleColor = () => {
+        if ( userLogued.followers.find(u => u.name === user.name)) {
+            setColorButton("rgb(30, 107, 251)")
+        } else {
+            setColorButton("rgb(245, 107, 107)")
+        }
     }
 
      
@@ -33,7 +43,8 @@ const User = () => {
             }).catch(error => {
                 console.log(error) 
             });
-            getUserLogued()          
+            getUserLogued() 
+            handleColor()         
         }, []
     )
 
@@ -41,14 +52,13 @@ const User = () => {
     const addFollower = (user) => {
         Api.userFollow(user.id)
         .then(success =>
-            setUser(prevUser => ({
+            setUserLogued(prevUser => ({
                 ...prevUser,
                 followers: success.data          
             }))
         )
     }
 
-    console.log(user.followers)
 
     return(
         <div>
@@ -60,9 +70,9 @@ const User = () => {
                 <div className="nameUserPost">
                     <p>{user.name}</p>
                 </div>
-                <button type="text" className="btn btn-link" 
+                <button type="text" className="btn" style={{background:colorButton}}
                     onClick={(event) => 
-                    {event.preventDefault(); addFollower(user) }}>{user.followers.find(u => u.name === userLogued.name) ? 'unFollow' : 'Follow'}</button>
+                    {event.preventDefault(); addFollower(user) ; handleColor()}}>{userLogued.followers.find(u => u.name === user.name) ? 'unFollow' : 'Follow' }</button>
             </div>
             <div className="container-fluid">
                 <div className="row">
@@ -83,4 +93,3 @@ const User = () => {
 }
 
 export default User ;
-
